@@ -1,0 +1,151 @@
+.c-category-shop {
+    position: relative;
+    height: max-content;
+    width: max-content;
+    margin: 10px 23px;
+    z-index: 1;
+}
+
+.c-category-shop img {
+    height: 360px;
+    width: 246px;
+}
+
+.c-category-shop-btn button {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 2;
+    height: 40px;
+    width: 150px;
+    font-size: 110%;
+    font-weight: 500;
+    padding: 5px;
+    cursor: pointer;
+    background-color: white;
+    transition: height 0.1s, width 0.1s, bottom 0.1s;
+}
+
+.c-category-shop-btn button:hover {
+    height: 45px;
+    width: 155px;
+    bottom: 28px;
+}
+
+.c-category-name {
+    display: flex;
+    height: 95px;
+    width: 260px;
+    margin: 10px 15px;
+    background-color: var(--footer-color);
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.c-category-name:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.c-category-name img {
+    height: 100%;
+    width: 50%;
+    border-top-left-radius: 15px;
+    border-end-start-radius: 15px;
+}
+
+.c-category-name p {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.c-sale {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    width: 210px;
+    margin: 10px 16px;
+}
+
+.c-sale-percent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 63px;
+    width: 54px;
+    background-color: #FFC436;
+    font-size: 110%;
+}
+
+.c-sale-percent p {
+    font-weight: 500;
+}
+
+.c-sale img, .c-item img {
+    height: 278px;
+    width: 100%;
+}
+
+.c-sale-price {
+    display: flex;
+    align-items: center;
+}
+
+.c-sale-price-cost, .c-item-cost {
+    font-size: 120%;
+    color: #F94C10;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.c-sale-price-sale {
+    color: #9E9FA5;
+}
+
+del {
+    color: #9E9FA5;
+}
+
+.c-item {
+    height: max-content;
+    width: 210px;
+    margin: 10px 16px;
+    background-color: white;
+}
+
+.c-item-infor {
+    padding: 10px;
+}
+
+.c-item-des {
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.c-item-tag {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 80%;
+}
+
+.c-item-tag p {
+    padding: 2px 5px;
+    color: red;
+    border: 1px solid red;
+    /* background-color: #FFC436; */
+    margin-right: 10px;
+    border-radius: 40px;
+    cursor: pointer;
+    margin: 5px 5px 5px 0;
+}
