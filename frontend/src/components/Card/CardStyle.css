@@ -102,7 +102,7 @@
 
 .c-sale-price-cost, .c-item-cost {
     font-size: 120%;
-    color: #F94C10;
+    color: var(--price-color);
     font-weight: 700;
     margin-right: 10px;
 }

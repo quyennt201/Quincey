@@ -1,0 +1,167 @@
+.infor {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 145px;
+}
+
+.c-infor {
+    background-color: white;
+    padding: 20px;
+}
+
+.infor-general {
+    display: flex;
+    height: max-content;
+    /* width: max-content; */
+}
+
+.infor-general-img {
+    display: flex;
+    flex-direction: column;
+}
+
+.i-general-img-big {
+    height: 600px;
+    width: 600px;
+}
+
+.i-general-img-small {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.i-general-img-small img {
+    height: 120px;
+    width: 120px;
+    padding: 7px;
+}
+
+.i-general-img-small img:first-child {
+    padding-left: 0px;
+}
+
+.i-general-img-small img:last-child {
+    padding-right: 0px;
+}
+
+.i-share {
+    font-size: 180%;
+}
+
+.i-share i {
+    margin-right: 5px;
+}
+
+.infor-general-txt {
+    margin: 0 30px;
+}
+
+.i-general-des {
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.i-general-des, .i-label, .i-txt, .i-item {
+    letter-spacing: 0px !important;
+    text-transform: capitalize;
+}
+
+.i-general-review {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.i-general-price {
+    font-size: 200%;
+    color: var(--price-color);
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgb(205, 204, 204);
+}
+
+.i-general-infor{
+    padding: 20px 0;
+}
+
+.i-general-infor-form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.i-label {
+    display: flex;
+    align-items: center;
+    width: 130px;
+    color: var(--grey-color);
+    font-weight: bold;
+}
+
+.i-label, .i-txt {
+    font-size: 120%;
+    /* font-weight: 300; */
+}
+
+.i-item {
+    font-size: 110%;
+    padding: 8px 16px;
+    border: 1px solid rgb(205, 204, 204);
+    margin-right: 10px;
+    /* border-radius: 20px; */
+    cursor: pointer;
+    background-color: white;
+}
+
+.i-input-select {
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    border: 1px solid rgb(205, 204, 204);
+    cursor: pointer;
+}
+
+.i-input-select i {
+    font-weight: 100;
+    font-size: 120%;
+}
+
+.i-input-display {
+    height: 40px;
+    width: 60px;
+    border: none;
+    border-top: 1px solid rgb(205, 204, 204);
+    border-bottom: 1px solid rgb(205, 204, 204);
+    text-align: center;
+    font-size: 110%;
+}
+
+.i-general-btn {
+    display: flex;
+}
+
+.i-btn {
+    padding: 10px 20px;
+    font-size: 120%;
+    background-color: white;
+    margin-right: 20px;
+}
+
+.i-general-btn-add {
+    border-color: black;
+}
+
+.i-general-btn-add:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.i-general-btn-buy {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.i-general-btn-buy:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}

@@ -13,10 +13,10 @@ function CardItem(props) {
         </div>
         <p className="c-item-cost">${props.cost}</p>
         <div className="c-item-review">
-          <i class="fas fa-star" style={{ color: "#F8DE22" }}></i>
-          <i class="fas fa-star" style={{ color: "#F8DE22" }}></i>
-          <i class="fas fa-star" style={{ color: "#F8DE22" }}></i>
-          <i class="fas fa-star" style={{ color: "#F8DE22" }}></i>
+          <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>
+          <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>
+          <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>
+          <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>
           <i class="fas fa-star" style={{ color: "#D8D9DA" }}></i>
         </div>
       </div>
