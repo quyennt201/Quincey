@@ -116,10 +116,65 @@ del {
 }
 
 .c-item {
+    position: relative;
+    z-index: 1;
     height: max-content;
     width: 210px;
+    /* margin: 10px; */
     margin: 10px 16px;
     background-color: white;
+}
+
+.c-item-img {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.c-item-img>button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 30px;
+    z-index: 2;
+    background-color: white;
+    height: 30px;
+    width: max-content;
+    padding: 20px 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.c-item-img:hover >button {
+    display: flex;
+}
+
+.c-item-img:hover >div {
+    display: flex;
+}
+
+.c-item-img-btn {
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 2;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+}
+
+.c-item-img-btn button {
+    padding: 3px 25px;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: white;
+    border: none;
+    font-size: 120%;
 }
 
 .c-item-infor {

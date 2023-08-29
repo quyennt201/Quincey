@@ -7,6 +7,7 @@
 .c-infor {
     background-color: white;
     padding: 20px;
+    margin-bottom: 30px;
 }
 
 .infor-general {
@@ -106,9 +107,13 @@
     padding: 8px 16px;
     border: 1px solid rgb(205, 204, 204);
     margin-right: 10px;
-    /* border-radius: 20px; */
+    /* border-radius: 6px; */
     cursor: pointer;
     background-color: white;
+}
+
+.i-item:hover {
+    border: 1px solid var(--black-color);
 }
 
 .i-input-select {
@@ -164,4 +169,42 @@
 .i-general-btn-buy:hover {
     background-color: rgba(0, 0, 0, 0.7);
     cursor: pointer;
+}
+
+.infor-detail {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    width: 100%;
+}
+
+.i-title {
+    font-size: 200%;
+    padding: 20px;
+    text-transform:capitalize;
+    background-color: var(--main-color);
+    color: var(--grey-color);
+    font-weight: 500;
+}
+
+.infor-detail-txt, .infor-des-txt {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    padding: 20px;
+}
+
+.infor-des-txt {
+    color: var(--grey-color);
+}
+
+.infor-des-txt h3 {
+    margin-bottom: 5px;
+}
+
+.infor-more {
+    margin: 0;
+    padding: 20px 110px;
+    background-color: white;
 }

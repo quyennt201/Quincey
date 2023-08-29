@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+body {
+  position: relative;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -35,4 +39,35 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* letter-spacing: 2px; */
+  font-family: 'Montserrat';
+  /* font-family: Arial, Helvetica, sans-serif; */
+  /* font-family: 'Helvetica'; */
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica-Font/Helvetica-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
+:root {
+  --main-color: #F5F5F5;
+  --black-color: #000000;
+  --black-hover: rgba(0, 0, 0, 0.8);
+  --black-active: rgba(0, 0, 0, 0.9);
+  --grey-color: rgb(82, 78, 78);
+  --footer-color: rgb(226, 228, 228);
+  --star-color: #F8DE22;
+  --price-color: #F94C10;
 }

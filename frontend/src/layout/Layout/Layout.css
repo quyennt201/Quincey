@@ -1,27 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    letter-spacing: 2px;
-    /* font-family: Arial, Helvetica, sans-serif; */
-    /* font-family: 'Helvetica'; */
-}
-
-@font-face {
-    font-family: 'Helvetica';
-    src: url('../../assets/fonts/Helvetica-Font/Helvetica-Bold.ttf');
-}
-
-:root {
-    --main-color: #F5F5F5;
-    --black-color: #000000;
-    --grey-color: rgb(82, 78, 78);
-    --footer-color: rgb(226, 228, 228);
-    --star-color: #F8DE22;
-    --price-color: #F94C10;
-}
-
 .body {
+    position: relative;
+    z-index: 1;
     padding: 10px;
     background-color: var(--main-color);
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
