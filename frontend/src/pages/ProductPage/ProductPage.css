@@ -108,3 +108,7 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.product-form {
+    width: 100%;
+}

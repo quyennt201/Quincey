@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 import { Slider } from "antd";
 import "./ProductPage.css";
 import CardItem from "../../components/Card/CardItem";
 import productService from "../../services/ProductService";
 import Loading from "../../components/Loading/Loading";
-import ProductAddForm from "../../components/Form/ProductAddForm";
+import ProductAddForm from "../../components/AddForm/ProductAddForm";
+import ToastMess from "../../components/ToastMess/ToastMess";
 
 function ProductPage() {
-  const [data, setData] = useState();
-  const [valueSliderMin, setValueSliderMin] = useState(0);
-  const [valueSliderMax, setValueSliderMax] = useState(100);
+  const [data, setData] = useState([]);
+  const [dataUpdate, setDataUpdate] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isAdd, setIsAdd] = useState(false);
+  const [displayForm, setDisplayForm] = useState(false); // display the information filling form
+  const [isUpdate, setIsUpdate] = useState(false); // false - form update && true - form add new
+  const [isDelete, setIsDelete] = useState(false);
+  const [toastMess, setToastMess] = useState(false);
+  const [txtToast, setTxtToast] = useState("");
+  const [valueSliderMin, setValueSliderMin] = useState(0); // value min of price in search
+  const [valueSliderMax, setValueSliderMax] = useState(100); // value max of price in search
   const name = useParams().name || "";
 
   const trademark = ["Chanel", "Dior", "LV"];
@@ -38,18 +44,27 @@ function ProductPage() {
     }, 500);
     getData();
     window.scrollTo(0, 0);
-  }, [name]);
+  }, [name, displayForm, isDelete]);
 
   return (
     <div className="product">
       {loading && <Loading />}
+      {toastMess && (
+        <ToastMess
+          type="success"
+          txt={txtToast}
+          setToastMess={setToastMess}
+          setTxtToast={setTxtToast}
+          style={{ top: "130px" }}
+        />
+      )}
       {!name && (
         <div className="product-add">
           <button
-            className={isAdd ? "product-list-btn" : "product-add-btn"}
-            onClick={() => setIsAdd(!isAdd)}
+            className={displayForm ? "product-list-btn" : "product-add-btn"}
+            onClick={() => setDisplayForm(!displayForm)}
           >
-            {isAdd ? "Product List" : "Add New Product"}
+            {displayForm ? "Product List" : "Add New Product"}
           </button>
         </div>
       )}
@@ -134,23 +149,29 @@ function ProductPage() {
         </div>
       </div>
       <div className="product-manage">
-        {!isAdd ? (
+        {!displayForm ? (
           <div className="product-list">
             {data?.map((d) => (
               <CardItem
-                _id={d._id}
                 style={{ margin: "10px" }}
-                img={d.img[0]}
-                cost={d.price}
-                des={d.des}
                 name={name}
+                data={d}
+                isDelete={isDelete}
+                setIsDelete={setIsDelete}
+                setToastMess={setToastMess}
+                setTxtToast={setTxtToast}
+                setDisplayForm={setDisplayForm}
+                setIsUpdate={setIsUpdate}
+                setDataUpdate={setDataUpdate}
               />
             ))}
           </div>
         ) : (
-          <div className="product-form">
-            <ProductAddForm />
-          </div>
+          <ProductAddForm
+            isUpdate={isUpdate}
+            dataUpdate={dataUpdate}
+            setDisplayForm={setDisplayForm}
+          />
         )}
       </div>
     </div>

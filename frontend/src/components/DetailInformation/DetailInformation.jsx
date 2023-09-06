@@ -214,11 +214,8 @@ function DetailInformation() {
         <div className="more-item">
           {datas?.map((d) => (
             <CardItem
-              _id={d._id}
+              data={d}
               style={{ margin: "10px" }}
-              img={d.img[0]}
-              cost={d.price}
-              des={d.des}
               name="detail"
             />
           ))}

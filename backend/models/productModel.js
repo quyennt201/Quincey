@@ -13,7 +13,10 @@ const productSchema = new mongoose.Schema(
     style: String,
     origin: String,
     inventory: Number,
-    sold: Number,
+    sold: {
+      type: Number,
+      default: 0
+    },
     sale: {
       type: Boolean,
       default: false,

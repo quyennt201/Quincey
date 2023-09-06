@@ -26,8 +26,7 @@ function HomePage() {
   const getData = async () => {
     setLoading(true);
     const res = await productService.getProducts();
-    setData(res.data);
-    console.log(res.data)
+    setData(res?.data);
   };
 
   useEffect(() => {

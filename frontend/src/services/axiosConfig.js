@@ -3,8 +3,7 @@ import axios from "axios";
 const axiosConfig = axios.create({
   baseURL: "http://localhost:8080/api/v1",
   headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "multipart/form-data; application/json"
+    "Access-Control-Allow-Origin": "*"
   }
 });
 
@@ -17,7 +16,7 @@ axiosConfig.interceptors.response.use(
     return response;
   },
   (error) => {
-    alert(error.response.data.error)
+    console.log(error)
   }
 );
 

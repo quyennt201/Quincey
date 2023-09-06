@@ -90,7 +90,7 @@
     font-weight: 500;
 }
 
-.c-sale img, .c-item img {
+.c-sale >img, .c-item >img {
     height: 278px;
     width: 100%;
 }
@@ -117,7 +117,7 @@ del {
 
 .c-item {
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
     height: max-content;
     width: 210px;
     /* margin: 10px; */
