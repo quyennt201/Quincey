@@ -7,12 +7,14 @@ import img1 from "../../assets/img/sale/sale1.jpg";
 import imgSale1 from "../../assets/img/sale/sale1.jpg";
 import productService from "../../services/ProductService";
 import Loading from "../Loading/Loading";
+import SlideShow from "../../components/SlideShow/SlideShow";
+import { Slide } from "react-slideshow-image";
 
 function DetailInformation() {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [datas, setDatas] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   let lists = Object.keys(data);
   lists = lists.filter(
@@ -27,7 +29,7 @@ function DetailInformation() {
   );
 
   const getData = async () => {
-    setLoading(true)
+    setLoading(true);
     const res = await productService.getProductById(id);
     const res2 = await productService.getProducts();
     setData(res.data);
@@ -36,10 +38,10 @@ function DetailInformation() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false)
+      setLoading(false);
     }, 500);
     getData();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [id]);
 
   return (
@@ -47,7 +49,20 @@ function DetailInformation() {
       {loading && <Loading />}
       <div className="infor-general c-infor">
         <div className="infor-general-img">
-          <img src={data?.img} className="i-general-img-big" />
+          {data?.img?.length == 1 ? (
+            <img src={data?.img} className="i-general-img-big" />
+          ) : (
+            <SlideShow
+              styleContainer={{
+                height: "600px",
+                width: "600px",
+                marginLeft: "50px",
+                marginRight: "50px",
+              }}
+              style={{ height: "600px", width: "600px" }}
+              srcImg={data?.img}
+            />
+          )}
           <div className="i-share" style={{ marginTop: "20px" }}>
             <i
               class="fas fa-share"
@@ -213,11 +228,7 @@ function DetailInformation() {
         <div className="more-title">Discover More</div>
         <div className="more-item">
           {datas?.map((d) => (
-            <CardItem
-              data={d}
-              style={{ margin: "10px" }}
-              name="detail"
-            />
+            <CardItem data={d} style={{ margin: "10px" }} name="detail" />
           ))}
         </div>
         <div className="more-button">

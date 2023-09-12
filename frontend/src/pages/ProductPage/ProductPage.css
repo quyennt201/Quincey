@@ -38,7 +38,7 @@
     /* background-color: azure; */
 }
 
-.product-search-category, .product-search-trademark, .product-search-price {
+.product-search-item {
     margin: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgb(236, 231, 231);

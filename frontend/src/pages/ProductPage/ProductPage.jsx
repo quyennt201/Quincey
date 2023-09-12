@@ -7,6 +7,14 @@ import productService from "../../services/ProductService";
 import Loading from "../../components/Loading/Loading";
 import ProductAddForm from "../../components/AddForm/ProductAddForm";
 import ToastMess from "../../components/ToastMess/ToastMess";
+import {
+  CATEGORY,
+  TRADEMARK,
+  SIZE,
+  COLOR,
+  STYLE,
+  TYPE,
+} from "../../datas/DATA";
 
 function ProductPage() {
   const [data, setData] = useState([]);
@@ -43,6 +51,7 @@ function ProductPage() {
       setLoading(false);
     }, 500);
     getData();
+    // setDisplayForm(false)
     window.scrollTo(0, 0);
   }, [name, displayForm, isDelete]);
 
@@ -69,67 +78,61 @@ function ProductPage() {
         </div>
       )}
       <div className="product-search">
-        <div className="product-search-category">
+        {!name ? (
+          <div className="product-search-item">
+            <form>
+              <p className="p-title">Type</p>
+              {TYPE?.map((tr) => (
+                <>
+                  <input
+                    type="radio"
+                    className="p-category"
+                    name="type"
+                    value={tr.value}
+                  />
+                  <label for="type">{tr.label}</label>
+                  <br />
+                </>
+              ))}
+            </form>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="product-search-item">
           <form>
             <p className="p-title">Category</p>
-            <input
-              type="radio"
-              className="p-category"
-              name="category"
-              value="men"
-            />
-            <label for="">Men</label>
-            <br />
-            <input
-              type="radio"
-              className="p-category"
-              name="category"
-              value="women"
-            />
-            <label for="">Women</label>
-            <br />
-            <input
-              type="radio"
-              className="p-category"
-              name="category"
-              value="kids"
-            />
-            <label for="">Kids</label>
-            <br />
-            <input
-              type="radio"
-              className="p-category"
-              name="category"
-              value="lady"
-            />
-            <label for="">Lady</label>
-            <br />
-            <input
-              type="radio"
-              className="p-category"
-              name="category"
-              value="gentlemen"
-            />
-            <label for="">Gentlemen</label>
-          </form>
-        </div>
-        <div className="product-search-trademark">
-          <form>
-            <p className="p-title">Trademark</p>
-            {trademark.map((tr) => (
-              <div>
+            {CATEGORY?.map((tr) => (
+              <>
                 <input
                   type="radio"
                   className="p-category"
                   name="category"
-                  value="men"
+                  value={tr.value}
                 />
-                <label for="">{tr}</label>
+                <label for="category">{tr.label}</label>
+                <br />
+              </>
+            ))}
+          </form>
+        </div>
+        <div className="product-search-item">
+          <form>
+            <p className="p-title">Trademark</p>
+            {TRADEMARK.map((tr) => (
+              <div>
+                <input
+                  type="radio"
+                  className="p-category"
+                  name="trademark"
+                  value={tr.value}
+                />
+                <label for="trademark">{tr.label}</label>
               </div>
             ))}
           </form>
         </div>
-        <div className="product-search-price">
+        <div className="product-search-item">
           <p className="p-title">Price</p>
           <Slider
             range
@@ -149,11 +152,17 @@ function ProductPage() {
         </div>
       </div>
       <div className="product-manage">
-        {!displayForm ? (
+        {displayForm && !name ? (
+          <ProductAddForm
+            isUpdate={isUpdate}
+            dataUpdate={dataUpdate}
+            setDisplayForm={setDisplayForm}
+          />
+        ) : (
           <div className="product-list">
             {data?.map((d) => (
               <CardItem
-                style={{ margin: "10px" }}
+                style={{ margin: "20px" }}
                 name={name}
                 data={d}
                 isDelete={isDelete}
@@ -166,12 +175,6 @@ function ProductPage() {
               />
             ))}
           </div>
-        ) : (
-          <ProductAddForm
-            isUpdate={isUpdate}
-            dataUpdate={dataUpdate}
-            setDisplayForm={setDisplayForm}
-          />
         )}
       </div>
     </div>

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "./CardStyle.css";
 import Loading from "../Loading/Loading";
 import Popup from "../Popup/Popup";
+import { addToCart, cartState } from "../../recoil/CartState";
+import { useRecoilState } from "recoil";
 
 function CardItem(props) {
   const {
@@ -15,10 +17,12 @@ function CardItem(props) {
     setDataUpdate,
     setDisplayForm,
     setToastMess,
-    setTxtToast
+    setTxtToast,
   } = props;
 
   const [popup, setPopup] = useState(false);
+  const [cart, setCart] = useRecoilState(cartState);
+  // const [cart, setCart] = useState([]);
 
   const handleDelete = () => {
     setPopup(true);
@@ -31,7 +35,16 @@ function CardItem(props) {
     setIsUpdate(true);
   };
 
-  const handleAddToCard = () => {};
+  const handleAddToCard = () => {
+    const newCart = addToCart(cart, data);
+    setCart(newCart);
+  };
+
+  const getPriceSale = () => {
+    const price = data?.price 
+    return price - price*data?.percent/100;
+  }
+
   return (
     <div className="c-item" style={style} id={data?._id}>
       {popup && (
@@ -43,6 +56,12 @@ function CardItem(props) {
           setToastMess={setToastMess}
           setTxtToast={setTxtToast}
         />
+      )}
+      {data?.sale && data?.percent > 0 && (
+        <div className="c-sale-percent">
+          <i class="fas fa-bolt"></i>
+          <p className="c-sale-percent-txt">-{data?.percent}%</p>
+        </div>
       )}
       <div className="c-item-img">
         {name ? (
@@ -73,7 +92,17 @@ function CardItem(props) {
           <p>#xuhuong</p>
           <p>#dacbiet</p>
         </div>
-        <p className="c-item-cost">${data?.price}</p>
+        {data?.sale && data?.percent > 0 ? (
+          <div className="c-sale-price">
+            <p className="c-sale-price-cost">${getPriceSale()}</p>
+            <del>
+              <p className="c-sale-price-sale">{data?.price}</p>
+            </del>
+          </div>
+        ) : (
+          <p className="c-item-cost">${data?.price}</p>
+        )}
+        {/* <p className="c-item-cost">${data?.price}</p> */}
         <div className="c-item-review">
           <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>
           <i class="fas fa-star" style={{ color: "var(--star-color)" }}></i>

@@ -24,25 +24,7 @@
 .i-general-img-big {
     height: 600px;
     width: 600px;
-}
-
-.i-general-img-small {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.i-general-img-small img {
-    height: 120px;
-    width: 120px;
-    padding: 7px;
-}
-
-.i-general-img-small img:first-child {
-    padding-left: 0px;
-}
-
-.i-general-img-small img:last-child {
-    padding-right: 0px;
+    margin: 0 50px 0 50px;
 }
 
 .i-share {

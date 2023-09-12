@@ -4,7 +4,7 @@ import axios from "axios";
 import { Image } from "cloudinary-react";
 import Input from "../Input/Input";
 import Checkbox from "../Checkbox/Checkbox";
-import { TRADEMARK, CATEGORY, COLOR, SIZE, STYLE } from "../../datas/DATA";
+import { TRADEMARK, CATEGORY, COLOR, SIZE, STYLE, TYPE } from "../../datas/DATA";
 import productService from "../../services/ProductService";
 import Loading from "../Loading/Loading";
 import ToastMess from "../ToastMess/ToastMess";
@@ -187,6 +187,13 @@ function ProductAddForm(props) {
             options={STYLE}
             value={{ value: product?.style, label: product?.style }}
             onChange={(value) => handleChange("style", value?.value)}
+          />
+          <Checkbox
+            isMulti={false}
+            label="type"
+            options={TYPE}
+            value={{ value: product?.type, label: product?.type }}
+            onChange={(value) => handleChange("type", value?.value)}
           />
         </div>
         <div style={{ display: "flex" }}>

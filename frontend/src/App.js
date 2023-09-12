@@ -13,6 +13,9 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductAddForm from "./components/AddForm/ProductAddForm";
 
 function App() {
+  if(!localStorage.getItem('cart')) {
+    localStorage.setItem('cart', JSON.stringify([]))
+  }
   return (
     <Routes>
       <Route path="/" exact element={<Layout />}>
