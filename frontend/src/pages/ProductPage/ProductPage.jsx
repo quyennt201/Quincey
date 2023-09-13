@@ -1,35 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Slider } from "antd";
 import "./ProductPage.css";
 import CardItem from "../../components/Card/CardItem";
 import productService from "../../services/ProductService";
-import Loading from "../../components/Loading/Loading";
 import ProductAddForm from "../../components/AddForm/ProductAddForm";
-import ToastMess from "../../components/ToastMess/ToastMess";
-import {
-  CATEGORY,
-  TRADEMARK,
-  SIZE,
-  COLOR,
-  STYLE,
-  TYPE,
-} from "../../datas/DATA";
+import { CATEGORY, TRADEMARK, TYPE } from "../../datas/DATA";
+import { loadingState } from "../../recoil/LoadingState";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { popupReload } from "../../recoil/PopupState";
 
 function ProductPage() {
-  const [data, setData] = useState([]);
-  const [dataUpdate, setDataUpdate] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [displayForm, setDisplayForm] = useState(false); // display the information filling form
-  const [isUpdate, setIsUpdate] = useState(false); // false - form update && true - form add new
-  const [isDelete, setIsDelete] = useState(false);
-  const [toastMess, setToastMess] = useState(false);
-  const [txtToast, setTxtToast] = useState("");
-  const [valueSliderMin, setValueSliderMin] = useState(0); // value min of price in search
-  const [valueSliderMax, setValueSliderMax] = useState(100); // value max of price in search
   const name = useParams().name || "";
 
-  const trademark = ["Chanel", "Dior", "LV"];
+  const [data, setData] = useState([]);
+  const [displayForm, setDisplayForm] = useState(false); // display the information filling form
+  const [dataUpdate, setDataUpdate] = useState({});
+  const [isUpdate, setIsUpdate] = useState(false); // false - form update && true - form add new
+  const [valueSliderMin, setValueSliderMin] = useState(0); // value min of price in search
+  const [valueSliderMax, setValueSliderMax] = useState(100); // value max of price in search
+
+  const setLoading = useSetRecoilState(loadingState);
+  const isReload = useRecoilValue(popupReload)
+
   const onChange = (value) => {
     setValueSliderMin(value[0]);
     setValueSliderMax(value[1]);
@@ -53,25 +46,19 @@ function ProductPage() {
     getData();
     // setDisplayForm(false)
     window.scrollTo(0, 0);
-  }, [name, displayForm, isDelete]);
+  }, [name, displayForm, isReload]);
 
   return (
     <div className="product">
-      {loading && <Loading />}
-      {toastMess && (
-        <ToastMess
-          type="success"
-          txt={txtToast}
-          setToastMess={setToastMess}
-          setTxtToast={setTxtToast}
-          style={{ top: "130px" }}
-        />
-      )}
       {!name && (
         <div className="product-add">
           <button
             className={displayForm ? "product-list-btn" : "product-add-btn"}
-            onClick={() => setDisplayForm(!displayForm)}
+            onClick={() => {
+              setDisplayForm(!displayForm)
+              setIsUpdate(false)
+              setDataUpdate({})
+            }}
           >
             {displayForm ? "Product List" : "Add New Product"}
           </button>
@@ -154,7 +141,7 @@ function ProductPage() {
       <div className="product-manage">
         {displayForm && !name ? (
           <ProductAddForm
-            isUpdate={isUpdate}
+            isUpdate={isUpdate}// true-form update || false-form add new
             dataUpdate={dataUpdate}
             setDisplayForm={setDisplayForm}
           />
@@ -165,10 +152,6 @@ function ProductPage() {
                 style={{ margin: "20px" }}
                 name={name}
                 data={d}
-                isDelete={isDelete}
-                setIsDelete={setIsDelete}
-                setToastMess={setToastMess}
-                setTxtToast={setTxtToast}
                 setDisplayForm={setDisplayForm}
                 setIsUpdate={setIsUpdate}
                 setDataUpdate={setDataUpdate}

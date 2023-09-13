@@ -4,25 +4,39 @@ import axios from "axios";
 import { Image } from "cloudinary-react";
 import Input from "../Input/Input";
 import Checkbox from "../Checkbox/Checkbox";
-import { TRADEMARK, CATEGORY, COLOR, SIZE, STYLE, TYPE } from "../../datas/DATA";
+import {
+  TRADEMARK,
+  CATEGORY,
+  COLOR,
+  SIZE,
+  STYLE,
+  TYPE,
+} from "../../datas/DATA";
 import productService from "../../services/ProductService";
-import Loading from "../Loading/Loading";
-import ToastMess from "../ToastMess/ToastMess";
+import { loadingState } from "../../recoil/LoadingState";
+import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
+import { useSetRecoilState } from "recoil";
 
 function ProductAddForm(props) {
-  const { isUpdate, dataUpdate } = props;
-  const [toastMess, setToastMess] = useState(false);
-  const [txtToast, setTxtToast] = useState("")
-
+  const { isUpdate, dataUpdate, setDisplayForm } = props;
+  const setType = useSetRecoilState(toastType);
+  const setTxt = useSetRecoilState(toastTxt);
+  const setState = useSetRecoilState(toastState);
   const [product, setProduct] = useState(
     dataUpdate || { sold: 0, sale: false, percent: 0 }
   );
   const [image, setImage] = useState("");
   const [urlImg, setUrlImg] = useState(product?.img || []);
   const [isSale, setIsSale] = useState(product?.sale || false);
-  const [loading, setLoading] = useState(false);
+  const setLoading = useSetRecoilState(loadingState);
 
-  const handleClose = (id) => {
+  const settingToastMess = (type, txt) => {
+    setState(true);
+    setTxt(txt);
+    setType(type);
+  };
+
+  const handleCloseImg = (id) => {
     const img = urlImg.filter((url) => url != id);
     setUrlImg(img);
   };
@@ -37,24 +51,27 @@ function ProductAddForm(props) {
   const handleAddProduct = async () => {
     setLoading(true);
     const res = await productService.createProduct(product);
-    setToastMess(true)
-    setTxtToast(res?.message)
-    setTimeout(() => {
-      props.setDisplayForm(false)
-    }, 1000);
-    setLoading(false);
+    if (res?.message) {
+      settingToastMess("success", res?.message);
+    }
+    else {
+      settingToastMess("error", res?.data?.error);
+    }
+    setDisplayForm(false)
+    setLoading(false)
   };
 
   const handleUpdateProduct = async () => {
     setLoading(true);
     const res = await productService.updateProduct(dataUpdate._id, product);
-    setToastMess(true)
-    setTxtToast(res?.message)
-    setTimeout(() => {
-      props.setDisplayForm(false)
-    }, 1000);
-    // console.log(res.message)
-    setLoading(false);
+    if (res?.message) {
+      settingToastMess("success", res?.message);
+    }
+    else {
+      settingToastMess("error", res?.data?.error);
+    }
+    setDisplayForm(false)
+    setLoading(false)
   };
 
   const uploadImage = async () => {
@@ -79,8 +96,6 @@ function ProductAddForm(props) {
 
   return (
     <div className="product-add-form">
-      {loading && <Loading />}
-      {toastMess && <ToastMess setToastMess={setToastMess} setDisplayForm={props.setDisplayForm} type="success" txt={txtToast} />}
       <div className="product-add-form-input">
         <Input
           type="text"
@@ -149,7 +164,7 @@ function ProductAddForm(props) {
                   publicId={url}
                 />
                 <button
-                  onClick={() => handleClose(url)}
+                  onClick={() => handleCloseImg(url)}
                   className="p-image-close"
                 >
                   <i class="fas fa-times-circle"></i>

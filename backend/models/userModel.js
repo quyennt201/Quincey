@@ -2,17 +2,23 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    username: String,
+    email: String,
     password: String,
     fullname: String,
-    address: String,
+    address: {
+      type: String,
+      default: null 
+    },
     phonenumber: String,
     avatar: {
       type: String,
       default:
         "https://res.cloudinary.com/trungvan1904/image/upload/v1666843620/image/default_avatar_pzvbqf.jpg",
     },
-    gender: Boolean,
+    gender: {
+      type: Boolean,
+      default: true
+    },
     admin: {
       type: Boolean,
       default: false,

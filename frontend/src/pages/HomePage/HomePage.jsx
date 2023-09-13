@@ -6,13 +6,14 @@ import CardSale from "../../components/Card/CardSale";
 import CardItem from "../../components/Card/CardItem";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import imgDefault from "../../datas/ImgDefault";
-import Loading from "../../components/Loading/Loading";
 import productService from "../../services/ProductService";
 import { fadeImages } from "../../datas/DATA";
+import { loadingState } from "../../recoil/LoadingState";
+import { useSetRecoilState, useRecoilState } from "recoil";
 
 function HomePage() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const setLoading = useSetRecoilState(loadingState);
 
   const getData = async () => {
     setLoading(true);
@@ -27,7 +28,6 @@ function HomePage() {
 
   return (
     <div>
-      {loading && <Loading />}
       <div style={{ backgroundColor: "var(--main-color)" }}>
         <SlideShow
           styleContainer={{

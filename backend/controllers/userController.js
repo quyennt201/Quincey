@@ -11,17 +11,22 @@ const exception = (e) => {
 const userController = {
   registerUser: async (req, res) => {
     try {
-      const { username, password, fullname, phonenumber, gender } = req.body;
+      const { email, password, fullname, phonenumber } = req.body;
       // hash password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       // check email
-      const checkEmail = await User.findOne({ username: username });
+      const checkEmail = await User.findOne({ email: email });
       if (checkEmail) {
         return res.status(400).json({ error: "Email already exists!" });
       }
       // create new user
-      const newUser = new User(req.body);
+      const newUser = new User({
+        email: email,
+        password: hashedPassword,
+        fullname: fullname || "",
+        phonenumber: phonenumber || ""
+      });
       // save to db
       const user = await newUser.save();
       res.status(201).json({ message: "Signed up successfully!", data: user });
@@ -32,9 +37,9 @@ const userController = {
 
   loginUser: async (req, res) => {
     try {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
       // check username
-      const user = await User.findOne({ username: username });
+      const user = await User.findOne({ email: email });
       if (!user) {
         return res.status(401).json({ error: "Wrong username!" });
       }

@@ -6,15 +6,16 @@ import CardItem from "../Card/CardItem";
 import img1 from "../../assets/img/sale/sale1.jpg";
 import imgSale1 from "../../assets/img/sale/sale1.jpg";
 import productService from "../../services/ProductService";
-import Loading from "../Loading/Loading";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import { Slide } from "react-slideshow-image";
+import { loadingState } from "../../recoil/LoadingState";
+import { useSetRecoilState, useRecoilState } from "recoil";
 
 function DetailInformation() {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [datas, setDatas] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const setLoading = useSetRecoilState(loadingState);
 
   let lists = Object.keys(data);
   lists = lists.filter(
@@ -37,16 +38,15 @@ function DetailInformation() {
   };
 
   useEffect(() => {
+    getData();
     setTimeout(() => {
       setLoading(false);
     }, 500);
-    getData();
     window.scrollTo(0, 0);
   }, [id]);
 
   return (
     <div className="infor">
-      {loading && <Loading />}
       <div className="infor-general c-infor">
         <div className="infor-general-img">
           {data?.img?.length == 1 ? (

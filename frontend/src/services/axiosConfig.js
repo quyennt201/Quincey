@@ -16,7 +16,7 @@ axiosConfig.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error)
+    return error.response;
   }
 );
 

@@ -5,9 +5,11 @@ import "../Header/Header.css";
 import { TYPE } from "../../datas/DATA";
 import { cartState } from "../../recoil/CartState";
 import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/UserState";
 
 function Navbar() {
   const cart = useRecoilValue(cartState);
+  const userLogin = useRecoilValue(userState)
   const getCartTotal = () => {
     return cart.reduce((sum, { quantity }) => sum + quantity, 0);
   };

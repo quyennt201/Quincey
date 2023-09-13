@@ -1,37 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./CardStyle.css";
-import Loading from "../Loading/Loading";
-import Popup from "../Popup/Popup";
 import { addToCart, cartState } from "../../recoil/CartState";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { popupState } from "../../recoil/PopupState";
 
 function CardItem(props) {
-  const {
-    data,
-    style,
-    name,
-    isDelete,
-    setIsDelete,
-    setIsUpdate,
-    setDataUpdate,
-    setDisplayForm,
-    setToastMess,
-    setTxtToast,
-  } = props;
+  const { data, style, name, setIsUpdate, setDataUpdate, setDisplayForm } =
+    props;
 
-  const [popup, setPopup] = useState(false);
+  const setPopup = useSetRecoilState(popupState);
   const [cart, setCart] = useRecoilState(cartState);
-  // const [cart, setCart] = useState([]);
 
   const handleDelete = () => {
-    setPopup(true);
-    console.log(popup);
+    setPopup({
+      status: true,
+      id: data?._id,
+    });
   };
 
   const handleUpdate = () => {
     setDataUpdate(data);
-    setDisplayForm(true);
+    setDisplayForm(true); // display form enter information
     setIsUpdate(true);
   };
 
@@ -41,22 +31,12 @@ function CardItem(props) {
   };
 
   const getPriceSale = () => {
-    const price = data?.price 
-    return price - price*data?.percent/100;
-  }
+    const price = data?.price;
+    return price - (price * data?.percent) / 100;
+  };
 
   return (
     <div className="c-item" style={style} id={data?._id}>
-      {popup && (
-        <Popup
-          show={popup}
-          id={data?._id}
-          isDelete={isDelete}
-          setIsDelete={setIsDelete}
-          setToastMess={setToastMess}
-          setTxtToast={setTxtToast}
-        />
-      )}
       {data?.sale && data?.percent > 0 && (
         <div className="c-sale-percent">
           <i class="fas fa-bolt"></i>

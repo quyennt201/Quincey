@@ -98,7 +98,7 @@
 }
 
 .btn-icon:hover {
-    background-color: rgb(218, 218, 218);
+    color: var(--black-color)
 }
 
 .length-cart {

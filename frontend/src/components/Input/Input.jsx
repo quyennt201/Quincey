@@ -8,7 +8,7 @@ function Input(props) {
         className="p-label"
         style={props.disabled ? { color: "#dddddd" } : { color: "black" }}
       >
-        {props.label}
+        {props.label} {props.require && (<i class="require">* </i>)}
       </label>
       <br />
       <input
