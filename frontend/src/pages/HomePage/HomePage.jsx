@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./HomePage.css";
 import CardCategoryShop from "../../components/Card/CardCategoryShop";
 import CardCategoryName from "../../components/Card/CardCategoryName";
-import CardSale from "../../components/Card/CardSale";
+import FlashSale from "../../components/FlashSale/FlashSale";
 import CardItem from "../../components/Card/CardItem";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import imgDefault from "../../datas/ImgDefault";
@@ -10,21 +10,11 @@ import productService from "../../services/ProductService";
 import { fadeImages } from "../../datas/DATA";
 import { loadingState } from "../../recoil/LoadingState";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import ViewMore from "../../components/ViewMore/ViewMore";
 
 function HomePage() {
   const [data, setData] = useState([]);
   const setLoading = useSetRecoilState(loadingState);
-
-  const getData = async () => {
-    setLoading(true);
-    const res = await productService.getProducts();
-    setData(res?.data);
-  };
-
-  useEffect(() => {
-    getData();
-    setLoading(false);
-  }, []);
 
   return (
     <div>
@@ -63,41 +53,10 @@ function HomePage() {
             <CardCategoryName img={imgDefault.imgDress} text="dress" />
             <CardCategoryName img={imgDefault.imgShirt} text="shirt" />
             <CardCategoryName img={imgDefault.imgTShirt} text="t-shirt" />
-            <CardCategoryName img={imgDefault.imgJean} text="jean" />
-            <CardCategoryName img={imgDefault.imgHoodie} text="hoodie" />
-            <CardCategoryName img={imgDefault.imgDress} text="dress" />
-            <CardCategoryName img={imgDefault.imgShirt} text="shirt" />
-            <CardCategoryName img={imgDefault.imgTShirt} text="t-shirt" />
           </div>
         </div>
-        <div className="sale">
-          <div className="sale-title">FLASH SALE</div>
-          <div className="sale-item">
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-            <CardSale cost="3.27" sale="7.44" percent="50" img={imgDefault.imgSale1} />
-          </div>
-        </div>
-        <div className="more">
-          <div className="more-title">Discover More</div>
-          <div className="more-item">
-            {data?.map((d) => (
-              <CardItem
-                data={d}
-                name="home"
-              />
-            ))}
-          </div>
-          <div className="more-button">
-            <button>
-              View More
-              <i class="fas fa-angle-down" style={{ marginLeft: "20px" }}></i>
-            </button>
-          </div>
-        </div>
+        <FlashSale />
+        <ViewMore title="Discover More" max={12} isButton={true} />
       </div>
     </div>
   );

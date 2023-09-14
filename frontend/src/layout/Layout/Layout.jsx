@@ -7,6 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import Popup from "../../components/Popup/Popup";
 import ToastMess from "../../components/ToastMess/ToastMess";
 import Loading from "../../components/Loading/Loading";
+import PopupCart from "../../components/PopupCart/PopupCart";
 
 function Layout() {
   return (

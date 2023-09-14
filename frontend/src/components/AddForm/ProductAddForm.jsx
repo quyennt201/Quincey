@@ -133,7 +133,7 @@ function ProductAddForm(props) {
             label="percent"
             style={{ width: "340px" }}
             disabled={!isSale}
-            value={isSale ? product?.percent : ""}
+            value={isSale ? product?.percent : 0}
             onChange={(e) => handleChange("percent", Number(e.target.value))}
           />
           <div style={{ display: "block", height: "60px", margin: "15px" }}>
@@ -145,7 +145,7 @@ function ProductAddForm(props) {
                 setIsSale(e.target.checked);
                 handleChange("sale", e.target.checked);
               }}
-              value="true"
+              checked={isSale}
               style={{ marginTop: "10px", marginLeft: "7px" }}
             />
           </div>
@@ -185,14 +185,14 @@ function ProductAddForm(props) {
             label="category"
             options={CATEGORY}
             value={{ value: product?.category, label: product?.category }}
-            onChange={(value) => handleChange("category", value?.value)}
+            onChange={(value) => handleChange("category", value?.value.toLowerCase())}
           />
           <Checkbox
             isMulti={false}
             label="trademark"
             options={TRADEMARK}
             value={{ value: product?.trademark, label: product?.trademark }}
-            onChange={(value) => handleChange("trademark", value?.value)}
+            onChange={(value) => handleChange("trademark", value?.value.toLowerCase())}
           />
         </div>
         <div style={{ display: "flex" }}>
@@ -201,14 +201,14 @@ function ProductAddForm(props) {
             label="style"
             options={STYLE}
             value={{ value: product?.style, label: product?.style }}
-            onChange={(value) => handleChange("style", value?.value)}
+            onChange={(value) => handleChange("style", value?.value.toLowerCase())}
           />
           <Checkbox
             isMulti={false}
             label="type"
             options={TYPE}
             value={{ value: product?.type, label: product?.type }}
-            onChange={(value) => handleChange("type", value?.value)}
+            onChange={(value) => handleChange("type", value?.value.toLowerCase())}
           />
         </div>
         <div style={{ display: "flex" }}>

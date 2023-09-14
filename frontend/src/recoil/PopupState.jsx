@@ -3,7 +3,6 @@ import { atom } from "recoil";
 const popup = {
     status: false,
     id: null,
-    isReload: false 
 }
 
 export const popupState = atom({

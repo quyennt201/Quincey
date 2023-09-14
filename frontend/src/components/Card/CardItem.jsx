@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./CardStyle.css";
-import { addToCart, cartState } from "../../recoil/CartState";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { popupState } from "../../recoil/PopupState";
+import PopupCart from "../PopupCart/PopupCart";
 
 function CardItem(props) {
   const { data, style, name, setIsUpdate, setDataUpdate, setDisplayForm } =
     props;
-
+  const [isCartPopup, setIsCartPopup] = useState(false);
+  const [cartPopupData, setCartPopupData] = useState({})
   const setPopup = useSetRecoilState(popupState);
-  const [cart, setCart] = useRecoilState(cartState);
 
   const handleDelete = () => {
     setPopup({
@@ -26,8 +26,11 @@ function CardItem(props) {
   };
 
   const handleAddToCard = () => {
-    const newCart = addToCart(cart, data);
-    setCart(newCart);
+    setIsCartPopup(true);
+    setCartPopupData(data);
+    // const newCart = addToCart(cart, data);
+    // setCart(newCart);
+    // localStorage.setItem("cart", JSON.stringify(newCart))
   };
 
   const getPriceSale = () => {
@@ -37,6 +40,7 @@ function CardItem(props) {
 
   return (
     <div className="c-item" style={style} id={data?._id}>
+      {isCartPopup && <PopupCart isCartPopup={isCartPopup} setIsCartPopup={setIsCartPopup} data={cartPopupData} />}
       {data?.sale && data?.percent > 0 && (
         <div className="c-sale-percent">
           <i class="fas fa-bolt"></i>
@@ -74,13 +78,13 @@ function CardItem(props) {
         </div>
         {data?.sale && data?.percent > 0 ? (
           <div className="c-sale-price">
-            <p className="c-sale-price-cost">${getPriceSale()}</p>
+            <p className="c-sale-price-cost">${getPriceSale().toFixed(2)}</p>
             <del>
-              <p className="c-sale-price-sale">{data?.price}</p>
+              <p className="c-sale-price-sale">{data?.price.toFixed(2)}</p>
             </del>
           </div>
         ) : (
-          <p className="c-item-cost">${data?.price}</p>
+          <p className="c-item-cost">${data?.price.toFixed(2)}</p>
         )}
         {/* <p className="c-item-cost">${data?.price}</p> */}
         <div className="c-item-review">

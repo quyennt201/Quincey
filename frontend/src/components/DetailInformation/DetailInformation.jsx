@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./DetailInformation.css";
 import "../../pages/HomePage/HomePage.css";
-import CardItem from "../Card/CardItem";
-import img1 from "../../assets/img/sale/sale1.jpg";
-import imgSale1 from "../../assets/img/sale/sale1.jpg";
 import productService from "../../services/ProductService";
 import SlideShow from "../../components/SlideShow/SlideShow";
-import { Slide } from "react-slideshow-image";
 import { loadingState } from "../../recoil/LoadingState";
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
+import ViewMore from "../ViewMore/ViewMore";
 
 function DetailInformation() {
   const { id } = useParams();
@@ -28,6 +25,11 @@ function DetailInformation() {
       item == "origin" ||
       item == "inventory"
   );
+
+  const getPriceSale = () => {
+    const price = data?.price;
+    return price - (price * data?.percent) / 100;
+  };
 
   const getData = async () => {
     setLoading(true);
@@ -87,7 +89,16 @@ function DetailInformation() {
             <i class="fas fa-star" style={{ color: "#D8D9DA" }}></i>
             <p style={{ color: "var(--star-color)" }}>(1000+ Reviewrs)</p>
           </div>
-          <p className="i-general-price">${data?.price}</p>
+          {data?.sale && data?.percent > 0 ? (
+          <div className="infor-genetal-price">
+            <p className="i-general-price">${getPriceSale().toFixed(2)}</p>
+            <del>
+              <p className="i-general-price-sale c-sale-price-sale">{data?.price.toFixed(2)}</p>
+            </del>
+          </div>
+        ) : (
+          <p className="c-item-cost">${data?.price?.toFixed(2)}</p>
+        )}
           <div className="i-general-infor">
             <div className="i-general-infor-form">
               <p className="i-label">category</p>
@@ -224,20 +235,7 @@ function DetailInformation() {
           <br />
         </div>
       </div>
-      <div className="infor-more more">
-        <div className="more-title">Discover More</div>
-        <div className="more-item">
-          {datas?.map((d) => (
-            <CardItem data={d} style={{ margin: "10px" }} name="detail" />
-          ))}
-        </div>
-        <div className="more-button">
-          <button>
-            View More
-            <i class="fas fa-angle-down" style={{ marginLeft: "20px" }}></i>
-          </button>
-        </div>
-      </div>
+      <ViewMore title="Discover More" max={10} style={{margin: "0px"}} styleItem={{margin: "18px"}} isButton={true} />
     </div>
   );
 }

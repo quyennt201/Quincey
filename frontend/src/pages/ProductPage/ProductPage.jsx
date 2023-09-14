@@ -32,7 +32,7 @@ function ProductPage() {
     setLoading(true);
     let res = {};
     if (name) {
-      res = await productService.getProductByCategory(name);
+      res = await productService.getProductByName(name);
     } else {
       res = await productService.getProducts();
     }

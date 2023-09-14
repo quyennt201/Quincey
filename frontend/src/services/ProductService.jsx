@@ -7,8 +7,11 @@ const productService = {
     getProductById: (id) => {
         return axiosConfig.get(`/product/${id}`)
     },
-    getProductByCategory: (category) => {
-        return axiosConfig.post(`/product/search?category=${category}`) 
+    getProductByName: (name) => {
+        return axiosConfig.post(`/product/search?type=${name}`) 
+    },
+    getProductSale: () => {
+        return axiosConfig.post(`/product/sale`)
     },
     createProduct: (data) => {
         return axiosConfig.post('/product', data)

@@ -28,12 +28,19 @@ const productController = {
     }
   },
 
-  getByName: async (req, res) => {
+  getByType: async (req, res) => {
     try {
-      const products = await Product.find({ category: req.query.category });
-      res
-        .status(200)
-        .json({ message: "Get data successfully!", data: products });
+      const products = await Product.find({ type: req.query.type });
+      res.status(200).json({ message: "Get data success!", data: products });
+    } catch (e) {
+      res.status(500).json(exception(e));
+    }
+  },
+
+  getBySale: async (req, res) => {
+    try {
+      const products = await Product.find({ sale: true });
+      res.status(200).json({ message: "Get data success", data: products });
     } catch (e) {
       res.status(500).json(exception(e));
     }

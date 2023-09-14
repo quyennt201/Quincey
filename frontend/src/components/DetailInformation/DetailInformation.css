@@ -1,7 +1,7 @@
 .infor {
     display: flex;
     flex-direction: column;
-    margin: 20px 145px;
+    margin: 0 145px;
 }
 
 .c-infor {
@@ -55,11 +55,23 @@
     margin-bottom: 10px;
 }
 
+.infor-genetal-price {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgb(205, 204, 204);
+}
+
 .i-general-price {
     font-size: 200%;
     color: var(--price-color);
-    padding-bottom: 20px;
-    border-bottom: 1px dashed rgb(205, 204, 204);
+    
+}
+
+.i-general-price-sale {
+    font-size: 160%;
+    color: #9E9FA5;
+    margin-left: 10px;
 }
 
 .i-general-infor{
@@ -98,11 +110,25 @@
     border: 1px solid var(--black-color);
 }
 
+.i-item:focus {
+    border: 1px solid var(--black-color);
+}
+
+.i-item-focus {
+    border: 1px solid var(--black-color);
+}
+
+.i-input-quantity {
+    border: 1px solid rgb(205, 204, 204);
+    border-radius: 4px;
+}
+
 .i-input-select {
     height: 40px;
     width: 40px;
     background-color: white;
-    border: 1px solid rgb(205, 204, 204);
+    border: none;
+    /* border: 1px solid rgb(205, 204, 204); */
     cursor: pointer;
 }
 
@@ -115,10 +141,11 @@
     height: 40px;
     width: 60px;
     border: none;
-    border-top: 1px solid rgb(205, 204, 204);
-    border-bottom: 1px solid rgb(205, 204, 204);
+    border-right: 1px solid rgb(205, 204, 204);
+    border-left: 1px solid rgb(205, 204, 204);
     text-align: center;
     font-size: 110%;
+    outline: none;
 }
 
 .i-general-btn {
