@@ -3,7 +3,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./layout/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
-import DetailInformation from "./components/DetailInformation/DetailInformation";
+import DetailInformation from "./pages/DetailInformation/DetailInformation";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 

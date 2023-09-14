@@ -1,18 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./DetailInformation.css";
-import "../../pages/HomePage/HomePage.css";
+import '../HomePage/HomePage.css'
 import productService from "../../services/ProductService";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import { loadingState } from "../../recoil/LoadingState";
-import { useSetRecoilState } from "recoil";
-import ViewMore from "../ViewMore/ViewMore";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import ViewMore from "../../components/ViewMore/ViewMore";
+import { addToCart, cartState } from "../../recoil/CartState";
+import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 
 function DetailInformation() {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [datas, setDatas] = useState([]);
   const setLoading = useSetRecoilState(loadingState);
+  const [cart, setCart] = useRecoilState(cartState);
+  const setType = useSetRecoilState(toastType);
+  const setTxt = useSetRecoilState(toastTxt);
+  const setState = useSetRecoilState(toastState);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [cartItem, setCartItem] = useState({
+    product: data,
+    quantity: quantity,
+    color: "",
+    size: "",
+  });
+
+  const settingToastMess = (type, txt) => {
+    setState(true);
+    setTxt(txt);
+    setType(type);
+  };
+
+  const handleClick = (name, value) => {
+    setCartItem({
+      ...cartItem,
+      [name]: value,
+    });
+  };
+
+  // add
+  const handleClickIncrease = () => {
+    handleClick("quantity", quantity + 1);
+    setQuantity(quantity + 1);
+  };
+
+  // sub
+  const handleClickDecrease = () => {
+    handleClick("quantity", quantity - 1);
+    setQuantity(quantity - 1);
+  };
+
+  const handleAddToCart = () => {
+    const newCart = addToCart(cart, cartItem);
+    setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    settingToastMess("success", "success")
+  };
 
   let lists = Object.keys(data);
   lists = lists.filter(
@@ -34,9 +80,7 @@ function DetailInformation() {
   const getData = async () => {
     setLoading(true);
     const res = await productService.getProductById(id);
-    const res2 = await productService.getProducts();
     setData(res.data);
-    setDatas(res2.data);
   };
 
   useEffect(() => {
@@ -90,15 +134,17 @@ function DetailInformation() {
             <p style={{ color: "var(--star-color)" }}>(1000+ Reviewrs)</p>
           </div>
           {data?.sale && data?.percent > 0 ? (
-          <div className="infor-genetal-price">
-            <p className="i-general-price">${getPriceSale().toFixed(2)}</p>
-            <del>
-              <p className="i-general-price-sale c-sale-price-sale">{data?.price.toFixed(2)}</p>
-            </del>
-          </div>
-        ) : (
-          <p className="c-item-cost">${data?.price?.toFixed(2)}</p>
-        )}
+            <div className="infor-genetal-price">
+              <p className="i-general-price">${getPriceSale().toFixed(2)}</p>
+              <del>
+                <p className="i-general-price-sale c-sale-price-sale">
+                  {data?.price.toFixed(2)}
+                </p>
+              </del>
+            </div>
+          ) : (
+            <p className="c-item-cost">${data?.price?.toFixed(2)}</p>
+          )}
           <div className="i-general-infor">
             <div className="i-general-infor-form">
               <p className="i-label">category</p>
@@ -115,30 +161,64 @@ function DetailInformation() {
             <div className="i-general-infor-form">
               <p className="i-label">Color</p>
               {data?.color?.map((c) => (
-                <button className="i-item">{c}</button>
+                <button
+                  value={c}
+                  className={
+                    c === selectedColor ? "i-item i-item-focus" : "i-item"
+                  }
+                  onClick={(e) => {
+                    handleClick("color", e.target.innerText);
+                    setSelectedColor(c);
+                  }}
+                >
+                  {c}
+                </button>
               ))}
             </div>
             <div className="i-general-infor-form">
               <p className="i-label">size</p>
               {data?.size?.map((c) => (
-                <button className="i-item">{c}</button>
+                <button
+                  className={
+                    c === selectedSize ? "i-item i-item-focus" : "i-item"
+                  }
+                  onClick={(e) => {
+                    handleClick("size", e.target.innerText);
+                    setSelectedSize(c);
+                  }}
+                >
+                  {c}
+                </button>
               ))}
             </div>
             <div className="i-general-infor-form">
               <p className="i-label">quantity</p>
               <div className="i-input-quantity">
-                <button className="i-input-select">
+                <button
+                  className="i-input-select"
+                  onClick={handleClickDecrease}
+                >
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="text" className="i-input-display" value="1" />
-                <button className="i-input-select">
+                <input
+                  type="text"
+                  className="i-input-display"
+                  value={quantity}
+                />
+                <button
+                  className="i-input-select"
+                  onClick={handleClickIncrease}
+                >
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
             </div>
           </div>
           <div className="i-general-btn">
-            <button className="i-general-btn-add i-btn">
+            <button
+              className="i-general-btn-add i-btn"
+              onClick={handleAddToCart}
+            >
               <i class="fas fa-cart-plus"></i> Add to cart
             </button>
             <button className="i-general-btn-buy i-btn">Buy now</button>
@@ -235,7 +315,13 @@ function DetailInformation() {
           <br />
         </div>
       </div>
-      <ViewMore title="Discover More" max={10} style={{margin: "0px"}} styleItem={{margin: "18px"}} isButton={true} />
+      <ViewMore
+        title="Discover More"
+        max={10}
+        style={{ margin: "0px" }}
+        styleItem={{ margin: "18px" }}
+        isButton={true}
+      />
     </div>
   );
 }

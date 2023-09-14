@@ -19,11 +19,12 @@
 .infor-general-img {
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 .i-general-img-big {
-    height: 600px;
-    width: 600px;
+    height: 500px;
+    width: 500px;
     margin: 0 50px 0 50px;
 }
 
@@ -37,11 +38,15 @@
 
 .infor-general-txt {
     margin: 0 30px;
+    width: 50%;
 }
 
 .i-general-des {
     font-weight: 400;
     margin-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .i-general-des, .i-label, .i-txt, .i-item {

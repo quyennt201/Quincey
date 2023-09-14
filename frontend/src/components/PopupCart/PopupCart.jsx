@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./PopupCart.css";
-import "../../components/DetailInformation/DetailInformation.css";
+import "../../pages/DetailInformation/DetailInformation.css";
 import { addToCart, cartState } from "../../recoil/CartState";
 import { useRecoilState } from "recoil";
 
