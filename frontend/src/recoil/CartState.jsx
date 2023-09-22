@@ -49,3 +49,40 @@ export const addToCart = (cart, data) => {
   newCart.push(data);
   return newCart;
 };
+
+export const updateCart = (cart, idx, data) => {
+  const newCart = [...cart];
+
+  newCart[idx] = {
+    ...cart[idx],
+    ...data,
+  };
+  return newCart;
+};
+
+export const deleteCart = (cart, idex) => {
+  // const newCart = [...cart];
+  
+  const newCart = cart.filter((cart, idx) => idx != idex);
+  console.log(newCart)
+  return newCart;
+};
+
+export const addItem = (cart, idx) => {
+  const newCart = [...cart];
+  newCart[idx] = {
+    ...cart[idx],
+    quantity: cart[idx].quantity + 1,
+  };
+  return newCart;
+  // }
+};
+
+export const subItem = (cart, idx) => {
+  const newCart = [...cart];
+  newCart[idx] = {
+    ...cart[idx],
+    quantity: cart[idx].quantity - 1,
+  };
+  return newCart;
+};

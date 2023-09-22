@@ -26,7 +26,7 @@ const validateRequiredLogin = (data) => {
 };
 
 const validatePassword = (password) => {
-  if (password?.split("").length > 6) {
+  if (password?.split("").length >= 6) {
     return 1;
   }
   return 0;
@@ -46,7 +46,7 @@ export const validateLogin = (data) => {
   if (validateRequiredLogin(data))
     return validateRequiredRegister(data) + " is required";
   if (!validateEmail(data?.email)) return "Email invalid";
-  if (validatePassword(data?.password))
+  if (!validatePassword(data?.password))
     return "Password must be more than 6 characters long";
   return "";
 };

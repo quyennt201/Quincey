@@ -71,7 +71,14 @@ function LoginPage(props) {
         settingToastMess("success", res?.message);
         setUserLogin({ status: true, data: res?.data });
         setUser({});
-        naviagte("/");
+        console.log(res?.data)
+        localStorage.setItem("user", JSON.stringify(res?.data))
+        if(res?.data?.admin) {
+          naviagte("/product")
+        }
+        else {
+          naviagte("/");
+        }
         setLoading(false);
       } else {
         settingToastMess("error", res?.data?.error);

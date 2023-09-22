@@ -52,12 +52,17 @@
 }
 
 .popup-cart-btn-primary {
-    background-color: #019160;
+    background-color: var(--black-color);
     color: white;
 }
 
 .popup-cart-btn-primary:hover {
-    background-color: #2FBE8E;
+    background-color: var(--black-color);
+}
+
+.popup-cart-btn-primary:disabled {
+    background-color: var(--grey-color);
+    cursor: no-drop;
 }
 
 .popup-cart-btn-primary:active {

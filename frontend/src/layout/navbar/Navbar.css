@@ -20,23 +20,32 @@
 .menu-btn {
     height: 100%;
     width: max-content;
+    padding: 0 10px;
     /* padding: 10px; */
-    margin-right: 25px;
+    /* margin-right: 25px; */
     background-color: inherit;
     border: none;
     border-bottom: 2px solid white;
     font-size: 18px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     border-radius: 0 !important;
     cursor: pointer;
+    color: var(--grey-color);
 }
 
 .menu-btn:hover {
     border-bottom: 2px solid black;
 }
 
-.menu-btn:focus {
-    border-bottom: 2px solid black;
+.menu-btn-focus {
+    background-color: rgba(0, 0, 0, 0.19);
+    color: black !important;
+    border: none;
+    /* border-bottom: 2px solid black; */
+}
+
+.menu-btn-focus:hover {
+    border: none;
 }
 
 .menu-dropdown:hover {
@@ -99,9 +108,19 @@
     color: var(--grey-color);
     cursor: pointer;
     background-color: inherit;
+    /* height: 30px;
+    width: 30px; */
 }
 
 .btn-icon:hover {
+    color: var(--black-color)
+}
+
+.btn-icon:hover p {
+    background-color: var(--black-color)
+}
+
+.btn-icon-focus {
     color: var(--black-color)
 }
 
@@ -115,4 +134,8 @@
     color: white;
     padding: 0px 7px;
     border-radius: 10px;
+}
+
+.length-cart-focus {
+    background-color: var(--black-color);
 }

@@ -6,6 +6,14 @@ import HomePage from "./pages/HomePage/HomePage";
 import DetailInformation from "./pages/DetailInformation/DetailInformation";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
+import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import ShoppingCartElement from "./components/ShoppingCartElement/ShoppingCartElement";
+import Account from "./pages/Account/Account";
+import MyProfile from './components/MyProfile/MyProfile'
+import MyOrders from './components/MyOrders/MyOrders'
+import MyBank from "./components/MyBank/MyBank";
+import MyAddress from "./components/MyAddress/MyAddress";
+import ChangePassword from "./components/ChangePassword/ChangePassword";
 
 function App() {
   if(!localStorage.getItem('cart')) {
@@ -20,6 +28,17 @@ function App() {
         <Route path="/product" element={<ProductPage />} />
         <Route path="/product/:name" element={<ProductPage />} />
         <Route path="/product/detail/:id" element={<DetailInformation />} />
+        <Route path="/shopping-cart" element={<ShoppingCart />}>
+          <Route path="/shopping-cart" element={<ShoppingCartElement />} />
+          <Route path="/shopping-cart/checkout" element={<ShoppingCart />} />
+        </Route>
+        <Route path="/account" element={<Account />}>
+          <Route path="/account/profile" element={<MyProfile />} />
+          <Route path="/account/orders" element={<MyOrders />} />
+          <Route path="/account/bank" element={<MyBank />} />
+          <Route path="/account/address" element={<MyAddress />} />
+          <Route path="/account/change-password" element={<ChangePassword />} />
+        </Route>
       </Route>
     </Routes>
   );

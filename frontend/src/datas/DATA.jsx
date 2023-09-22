@@ -5,34 +5,34 @@ import img3 from "../assets/img/slideshow/slider_3.webp";
 const fadeImages = [img1, img2, img3];
 
 const TYPE = [
-  { value: "Men", label: "Men" },
-  { value: "Women", label: "Women" },
-  { value: "Kids", label: "Kids" },
+  { value: "men", label: "Men" },
+  { value: "women", label: "Women" },
+  { value: "kids", label: "Kids" },
 ];
 
 const TRADEMARK = [
-  { value: "Chanels", label: "Chanels" },
-  { value: "Dior", label: "Dior" },
-  { value: "Shein", label: "Shein" },
-  { value: "Other", label: "Other" },
+  { value: "chanels", label: "Chanels" },
+  { value: "dior", label: "Dior" },
+  { value: "shein", label: "Shein" },
+  { value: "other", label: "Other" },
 ];
 
 const CATEGORY = [
-  { value: "T-shirt", label: "T-Shirt" },
-  { value: "Jean", label: "Jean" },
-  { value: "Dress", label: "Dress" },
-  { value: "Shirt", label: "Shirt" },
-  { value: "Other", label: "Other" },
+  { value: "t-shirt", label: "T-Shirt" },
+  { value: "jean", label: "Jean" },
+  { value: "dress", label: "Dress" },
+  { value: "shirt", label: "Shirt" },
+  { value: "other", label: "Other" },
 ];
 
 const STYLE = [
-  { value: "Boho", label: "Boho" },
-  { value: "Casual", label: "Casual" },
-  { value: "Cute", label: "Cute" },
-  { value: "Elegant", label: "Elegant" },
-  { value: "Fashionable", label: "Fashionable" },
-  { value: "Party", label: "Party" },
-  { value: "Other", label: "Other" },
+  { value: "boho", label: "Boho" },
+  { value: "casual", label: "Casual" },
+  { value: "cute", label: "Cute" },
+  { value: "elegant", label: "Elegant" },
+  { value: "fashionable", label: "Fashionable" },
+  { value: "party", label: "Party" },
+  { value: "other", label: "Other" },
 ]
 
 const SIZE = [

@@ -158,31 +158,18 @@
 }
 
 .i-btn {
-    padding: 10px 20px;
+    padding: 10px 40px;
     font-size: 120%;
-    background-color: white;
-    margin-right: 20px;
-}
-
-.i-general-btn-add {
-    border-color: black;
-}
-
-.i-general-btn-add:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-color: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.i-general-btn-buy {
-    background-color: black;
+    background-color: var(--black-color);
     color: white;
+    margin-right: 20px;
     border: none;
+    cursor: pointer;
 }
 
-.i-general-btn-buy:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-    cursor: pointer;
+.i-btn:disabled {
+    background-color: var(--grey-color);
+    cursor: no-drop;
 }
 
 .infor-detail {

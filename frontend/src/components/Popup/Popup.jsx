@@ -37,6 +37,7 @@ function Popup(props) {
     setIsReload(!isReload) // change state to reload data
     setLoading(false);
   };
+  
   return (
     <div
       className="pop-up"

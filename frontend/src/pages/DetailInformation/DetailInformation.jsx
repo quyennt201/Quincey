@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./DetailInformation.css";
-import '../HomePage/HomePage.css'
+import "../HomePage/HomePage.css";
 import productService from "../../services/ProductService";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import { loadingState } from "../../recoil/LoadingState";
@@ -25,7 +25,7 @@ function DetailInformation() {
     product: data,
     quantity: quantity,
     color: "",
-    size: "",
+    size: ""
   });
 
   const settingToastMess = (type, txt) => {
@@ -49,15 +49,22 @@ function DetailInformation() {
 
   // sub
   const handleClickDecrease = () => {
-    handleClick("quantity", quantity - 1);
-    setQuantity(quantity - 1);
+    if (quantity > 1) {
+      handleClick("quantity", quantity - 1);
+      setQuantity(quantity - 1);
+    } else {
+      handleClick("quantity", 1);
+      setQuantity(1);
+    }
   };
 
   const handleAddToCart = () => {
     const newCart = addToCart(cart, cartItem);
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
-    settingToastMess("success", "success")
+    settingToastMess("success", "success");
+    setSelectedColor("")
+    setSelectedSize("")
   };
 
   let lists = Object.keys(data);
@@ -80,7 +87,11 @@ function DetailInformation() {
   const getData = async () => {
     setLoading(true);
     const res = await productService.getProductById(id);
-    setData(res.data);
+    setData(res?.data);
+    setCartItem({
+      ...cartItem,
+      product: res?.data 
+    })
   };
 
   useEffect(() => {
@@ -100,12 +111,12 @@ function DetailInformation() {
           ) : (
             <SlideShow
               styleContainer={{
-                height: "600px",
-                width: "600px",
+                height: "500px",
+                width: "500px",
                 marginLeft: "50px",
                 marginRight: "50px",
               }}
-              style={{ height: "600px", width: "600px" }}
+              style={{ height: "500px", width: "500px" }}
               srcImg={data?.img}
             />
           )}
@@ -214,15 +225,13 @@ function DetailInformation() {
               </div>
             </div>
           </div>
-          <div className="i-general-btn">
-            <button
-              className="i-general-btn-add i-btn"
+          <button
+              className="i-btn"
               onClick={handleAddToCart}
+              disabled={(!selectedColor || !selectedSize || !quantity) ? true : false}
             >
-              <i class="fas fa-cart-plus"></i> Add to cart
+              Add to cart
             </button>
-            <button className="i-general-btn-buy i-btn">Buy now</button>
-          </div>
         </div>
       </div>
       <div className="infor-detail c-infor">

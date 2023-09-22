@@ -28,6 +28,7 @@ function ProductAddForm(props) {
   const [image, setImage] = useState("");
   const [urlImg, setUrlImg] = useState(product?.img || []);
   const [isSale, setIsSale] = useState(product?.sale || false);
+  const [isChooseFile, setIsChooseFile] = useState(true);
   const setLoading = useSetRecoilState(loadingState);
 
   const settingToastMess = (type, txt) => {
@@ -53,12 +54,11 @@ function ProductAddForm(props) {
     const res = await productService.createProduct(product);
     if (res?.message) {
       settingToastMess("success", res?.message);
-    }
-    else {
+    } else {
       settingToastMess("error", res?.data?.error);
     }
-    setDisplayForm(false)
-    setLoading(false)
+    setDisplayForm(false);
+    setLoading(false);
   };
 
   const handleUpdateProduct = async () => {
@@ -66,32 +66,42 @@ function ProductAddForm(props) {
     const res = await productService.updateProduct(dataUpdate._id, product);
     if (res?.message) {
       settingToastMess("success", res?.message);
-    }
-    else {
+    } else {
       settingToastMess("error", res?.data?.error);
     }
-    setDisplayForm(false)
-    setLoading(false)
+    setDisplayForm(false);
+    setLoading(false);
   };
 
   const uploadImage = async () => {
     setLoading(true);
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "quincey");
+    if (isChooseFile) {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("upload_preset", "quincey");
 
-    await axios
-      .post("https://api.cloudinary.com/v1_1/dz2fcqjpg/image/upload", formData)
-      .then((response) => {
-        setUrlImg([...urlImg, response.data.url]);
-        handleChange("img", [...urlImg, response.data.url]);
-        setLoading(false);
-      })
-      .catch((err) => {
-        alert("Error occurred!");
-        console.log(err);
-        setLoading(false);
-      });
+      await axios
+        .post(
+          "https://api.cloudinary.com/v1_1/dz2fcqjpg/image/upload",
+          formData
+        )
+        .then((response) => {
+          setUrlImg([...urlImg, response.data.url]);
+          handleChange("img", [...urlImg, response.data.url]);
+          setLoading(false);
+          setImage("")
+        })
+        .catch((err) => {
+          settingToastMess("error", "Please select image!");
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      setUrlImg([...urlImg, image]);
+      handleChange("img", [...urlImg, image]);
+      setImage("")
+      setLoading(false)
+    }
   };
 
   return (
@@ -174,9 +184,19 @@ function ProductAddForm(props) {
           </div>
         </div>
         <div className="product-add-img">
-          <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+          {isChooseFile ? (
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+          ) : (
+            <input className="product-input-img" value={image} onChange={(e) => setImage(e.target.value)} />
+          )}
           <button id="addImg" onClick={uploadImage}>
             Add Image
+          </button>
+          <button
+            className="btn-redo"
+            onClick={() => setIsChooseFile(!isChooseFile)}
+          >
+            <i class="fas fa-redo-alt"></i>
           </button>
         </div>
         <div style={{ display: "flex" }}>
@@ -185,14 +205,18 @@ function ProductAddForm(props) {
             label="category"
             options={CATEGORY}
             value={{ value: product?.category, label: product?.category }}
-            onChange={(value) => handleChange("category", value?.value.toLowerCase())}
+            onChange={(value) =>
+              handleChange("category", value?.value.toLowerCase())
+            }
           />
           <Checkbox
             isMulti={false}
             label="trademark"
             options={TRADEMARK}
             value={{ value: product?.trademark, label: product?.trademark }}
-            onChange={(value) => handleChange("trademark", value?.value.toLowerCase())}
+            onChange={(value) =>
+              handleChange("trademark", value?.value.toLowerCase())
+            }
           />
         </div>
         <div style={{ display: "flex" }}>
@@ -201,14 +225,18 @@ function ProductAddForm(props) {
             label="style"
             options={STYLE}
             value={{ value: product?.style, label: product?.style }}
-            onChange={(value) => handleChange("style", value?.value.toLowerCase())}
+            onChange={(value) =>
+              handleChange("style", value?.value.toLowerCase())
+            }
           />
           <Checkbox
             isMulti={false}
             label="type"
             options={TYPE}
             value={{ value: product?.type, label: product?.type }}
-            onChange={(value) => handleChange("type", value?.value.toLowerCase())}
+            onChange={(value) =>
+              handleChange("type", value?.value.toLowerCase())
+            }
           />
         </div>
         <div style={{ display: "flex" }}>

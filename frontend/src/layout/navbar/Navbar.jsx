@@ -4,12 +4,24 @@ import "./Navbar.css";
 import "../Header/Header.css";
 import { TYPE } from "../../datas/DATA";
 import { cartState } from "../../recoil/CartState";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../../recoil/UserState";
+import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 
-function Navbar() {
+function Navbar(props) {
+  const { selected, setSelected } = props;
   const cart = useRecoilValue(cartState);
-  const userLogin = useRecoilValue(userState)
+  const userLogin = useRecoilValue(userState);
+  const setType = useSetRecoilState(toastType);
+  const setTxt = useSetRecoilState(toastTxt);
+  const setState = useSetRecoilState(toastState);
+
+  const settingToastMess = (type, txt) => {
+    setState(true);
+    setTxt(txt);
+    setType(type);
+  };
+
   const getCartTotal = () => {
     return cart.reduce((sum, { quantity }) => sum + quantity, 0);
   };
@@ -17,17 +29,44 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="menu">
-        <Link to="/">
-          <button className="menu-btn">Home</button>
-        </Link>
-        {TYPE?.map((t) => (
-          <Link to={`/product/${t.value.toLocaleLowerCase()}`}>
-            <button className="menu-btn">{t.value}</button>
+        {userLogin?.status && userLogin?.data?.admin ? (
+          <Link to="/product">
+            <button
+              className={
+                selected == "product" ? "menu-btn menu-btn-focus" : "menu-btn"
+              }
+              onClick={() => setSelected("product")}
+            >
+              Product
+            </button>
           </Link>
-        ))}
-        <Link to="/product">
-          <button className="menu-btn">Product</button>
-        </Link>
+        ) : (
+          <>
+            <Link to="/">
+              <button
+                className={
+                  selected == "" ? "menu-btn menu-btn-focus" : "menu-btn"
+                }
+                onClick={() => setSelected("")}
+              >
+                Home
+              </button>
+            </Link>
+            {TYPE?.map((t) => (
+              <Link to={`/product/${t.value}`}>
+                <button
+                  className={
+                    selected == t.value ? "menu-btn menu-btn-focus" : "menu-btn"
+                  }
+                  onClick={() => setSelected(t.value)}
+                >
+                  {t.label}
+                </button>
+              </Link>
+            ))}
+          </>
+        )}
+
         {/* <div class="w3-dropdown-hover">
           <button class="menu-btn menu-dropdown">Dropdown</button>
           <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -44,19 +83,72 @@ function Navbar() {
             <i class="fas fa-search"></i>
           </button>
         </div> */}
-        <button className="btn-icon">
-          <i class="far fa-search"></i>
-        </button>
-        <button className="btn-icon" style={{ marginLeft: "10px" }}>
-          <i class="far fa-heart"></i>
-        </button>
-        <button
-          className="btn-icon"
-          style={{ marginLeft: "10px", position: "relative", zIndex: "1" }}
-        >
-          <i class="far fa-shopping-cart"></i>
-          <p className="length-cart">{getCartTotal()}</p>
-        </button>
+        {userLogin?.status && userLogin?.data?.admin ? (
+          <Link>
+            <button
+              className="btn-icon"
+              style={{
+                marginLeft: "10px",
+                position: "relative",
+                zIndex: "1",
+              }}
+            >
+              <i class="fas fa-shopping-bag"></i>
+              <p className="length-cart">{getCartTotal()}</p>
+            </button>
+          </Link>
+        ) : (
+          <>
+            <button
+              className={
+                selected == "search" ? "btn-icon btn-icon-focus" : "btn-icon"
+              }
+              onClick={() => setSelected("search")}
+            >
+              <i class="far fa-search"></i>
+            </button>
+            <button
+              className={
+                selected == "favorite" ? "btn-icon btn-icon-focus" : "btn-icon"
+              }
+              style={{ marginLeft: "10px" }}
+              onClick={() => {
+                setSelected("favorite");
+                settingToastMess("info", "The skill is improving");
+              }}
+            >
+              <i class="far fa-heart"></i>
+            </button>
+            <Link to="/shopping-cart">
+              <button
+                className={
+                  selected == "shopping-cart"
+                    ? "btn-icon btn-icon-focus"
+                    : "btn-icon"
+                }
+                style={{
+                  marginLeft: "10px",
+                  position: "relative",
+                  zIndex: "1",
+                }}
+                // onClick={() => setSelected("shopping-cart")}
+              >
+                <i class="far fa-shopping-cart"></i>
+                {userLogin?.status && (
+                  <p
+                    className={
+                      selected == "shopping-cart"
+                        ? "length-cart length-cart-focus"
+                        : "length-cart"
+                    }
+                  >
+                    {getCartTotal()}
+                  </p>
+                )}
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

@@ -50,7 +50,6 @@ function CardItem(props) {
       <div className="c-item-img">
         {name ? (
           <button onClick={handleAddToCard}>
-            <i class="fas fa-cart-plus" style={{ marginRight: "10px" }}></i>
             Add to cart
           </button>
         ) : (

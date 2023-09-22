@@ -5,19 +5,23 @@ const userSchema = new mongoose.Schema(
     email: String,
     password: String,
     fullname: String,
-    address: {
-      type: String,
-      default: null 
-    },
+    address: [
+      {
+        apartmentnumber: String,
+        ward: String,
+        district: String,
+        city: String,
+      },
+    ],
     phonenumber: String,
     avatar: {
       type: String,
       default:
-        "https://res.cloudinary.com/trungvan1904/image/upload/v1666843620/image/default_avatar_pzvbqf.jpg",
+        "https://res.cloudinary.com/dz2fcqjpg/image/upload/v1695374699/mejug1pxuu1pkdrwbvro.jpg",
     },
     gender: {
       type: Boolean,
-      default: true
+      default: true,
     },
     admin: {
       type: Boolean,
@@ -26,7 +30,7 @@ const userSchema = new mongoose.Schema(
     orders: [
       {
         type: String,
-        ref: 'Order'
+        ref: "Order",
       },
     ],
   },

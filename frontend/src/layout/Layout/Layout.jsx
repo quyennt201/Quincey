@@ -1,5 +1,5 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import "./Layout.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -10,13 +10,19 @@ import Loading from "../../components/Loading/Loading";
 import PopupCart from "../../components/PopupCart/PopupCart";
 
 function Layout() {
+  const location = useLocation().pathname.split("/")
+  console.log(location[location.length - 1])
+  const [selected, setSelected] = useState(location[location.length - 1])
+  useEffect(() => {
+    setSelected(location[location.length - 1])
+  }, [location]);
   return (
     <div>
       <ToastMess />
       <Popup />
       <Loading />
-      <Header />
-      <Navbar />
+      <Header selected={selected} setSelected={setSelected} />
+      <Navbar selected={selected} setSelected={setSelected} />
       <div className="body">
         <Outlet />
       </div>

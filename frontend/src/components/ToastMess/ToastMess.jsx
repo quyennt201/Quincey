@@ -3,23 +3,26 @@ import "./ToastMess.css";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 
-function ToastMess(props) {
-  const type = useRecoilValue(toastType)
-  const txt = useRecoilValue(toastTxt)
-  const [state, setState] = useRecoilState(toastState)
+function ToastMess() {
+  const type = useRecoilValue(toastType);
+  const txt = useRecoilValue(toastTxt);
+  const [state, setState] = useRecoilState(toastState);
 
-    setTimeout(() => {
-        setState(false)
-    }, 2000);
+  setTimeout(() => {
+    setState(false);
+  }, 2000);
 
   return (
-    <div class="toast-box" style={state ? {display: "flex"} : {display: "none"}}>
+    <div
+      class="toast-box"
+      style={state ? { display: "flex" } : { display: "none" }}
+    >
       <div class={`toast-item toast-item-${type}`}>
         <div class="toast-icon">
-          {type=="error" && <i class="fas fa-exclamation-triangle"></i>}
-          {type=="warning" && <i class="fas fa-exclamation-circle"></i>}
-          {type=="success" && <i class="fas fa-check-circle"></i>}
-          {type=="info" && <i class="fas fa-info-circle"></i>}
+          {type == "error" && <i class="fas fa-exclamation-triangle"></i>}
+          {type == "warning" && <i class="fas fa-exclamation-circle"></i>}
+          {type == "success" && <i class="fas fa-check-circle"></i>}
+          {type == "info" && <i class="fas fa-info-circle"></i>}
         </div>
         <div class="toast-text">{txt}</div>
         {/* <div class="toast-close">

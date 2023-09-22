@@ -1,20 +1,21 @@
 import React, { useState, useRef } from "react";
 import "./PopupCart.css";
 import "../../pages/DetailInformation/DetailInformation.css";
-import { addToCart, cartState } from "../../recoil/CartState";
+import { addToCart, cartState, updateCart } from "../../recoil/CartState";
 import { useRecoilState } from "recoil";
 
 function PopupCart(props) {
-  const { isCartPopup, setIsCartPopup, data } = props;
+  const { isCartPopup, idx, setIsCartPopup, data, dataCartItem } = props;
+
   const [cart, setCart] = useRecoilState(cartState);
-  const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
+  const [quantity, setQuantity] = useState(dataCartItem?.quantity || 1);
+  const [selectedColor, setSelectedColor] = useState(dataCartItem?.color || "");
+  const [selectedSize, setSelectedSize] = useState(dataCartItem?.size || "");
   const [cartItem, setCartItem] = useState({
     product: data,
     quantity: quantity,
-    color: "",
-    size: "",
+    color: selectedColor,
+    size: selectedSize
   });
 
   const handleClick = (name, value) => {
@@ -32,8 +33,13 @@ function PopupCart(props) {
 
   // sub
   const handleClickDecrease = () => {
-    handleClick("quantity", quantity - 1);
-    setQuantity(quantity - 1);
+    if (quantity > 1) {
+      handleClick("quantity", quantity - 1);
+      setQuantity(quantity - 1);
+    } else {
+      handleClick("quantity", 1);
+      setQuantity(1);
+    }
   };
 
   const handleAddToCart = () => {
@@ -42,6 +48,13 @@ function PopupCart(props) {
     setIsCartPopup(false);
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
+
+  const handleUpdateToCart = () => {
+    const newCart = updateCart(cart, idx, cartItem);
+    setCart(newCart);
+    setIsCartPopup(false);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+  }
 
   return (
     <div
@@ -57,7 +70,7 @@ function PopupCart(props) {
               <button
                 value={c}
                 className={
-                  c === selectedColor ? "i-item i-item-focus" : "i-item"
+                  c.toLowerCase() === selectedColor.toLowerCase() ? "i-item i-item-focus" : "i-item"
                 }
                 onClick={(e) => {
                   handleClick("color", e.target.innerText);
@@ -106,9 +119,12 @@ function PopupCart(props) {
           </button>
           <button
             className="popup-cart-btn popup-cart-btn-primary"
-            onClick={handleAddToCart}
+            onClick={dataCartItem ? handleUpdateToCart : handleAddToCart}
+            disabled={
+              !selectedColor || !selectedSize || !quantity ? true : false
+            }
           >
-            Add to cart
+            {dataCartItem ? "Update" : "Add to cart"}
           </button>
         </div>
       </div>
