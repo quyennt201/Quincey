@@ -93,7 +93,7 @@ function ProductAddForm(props) {
         })
         .catch((err) => {
           settingToastMess("error", "Please select image!");
-          console.log(err);
+          // console.log(err);
           setLoading(false);
         });
     } else {
@@ -141,7 +141,7 @@ function ProductAddForm(props) {
           <Input
             type="number"
             label="percent"
-            style={{ width: "340px" }}
+            style={{ width: "325px" }}
             disabled={!isSale}
             value={isSale ? product?.percent : 0}
             onChange={(e) => handleChange("percent", Number(e.target.value))}
@@ -185,7 +185,7 @@ function ProductAddForm(props) {
         </div>
         <div className="product-add-img">
           {isChooseFile ? (
-            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <input type="file" accept="image" onChange={(e) => setImage(e.target.files[0])} />
           ) : (
             <input className="product-input-img" value={image} onChange={(e) => setImage(e.target.value)} />
           )}

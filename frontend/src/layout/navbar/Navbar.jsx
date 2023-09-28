@@ -29,7 +29,7 @@ function Navbar(props) {
   return (
     <div className="navbar">
       <div className="menu">
-        {userLogin?.status && userLogin?.data?.admin ? (
+        {userLogin?.admin ? (
           <Link to="/product">
             <button
               className={
@@ -83,7 +83,7 @@ function Navbar(props) {
             <i class="fas fa-search"></i>
           </button>
         </div> */}
-        {userLogin?.status && userLogin?.data?.admin ? (
+        {userLogin?.admin ? (
           <Link>
             <button
               className="btn-icon"
@@ -134,7 +134,7 @@ function Navbar(props) {
                 // onClick={() => setSelected("shopping-cart")}
               >
                 <i class="far fa-shopping-cart"></i>
-                {userLogin?.status && (
+                {userLogin && (
                   <p
                     className={
                       selected == "shopping-cart"

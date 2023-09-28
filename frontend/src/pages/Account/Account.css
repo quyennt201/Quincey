@@ -1,7 +1,7 @@
 .account {
     display: flex;
     margin: 0 100px;
-    height: 100vh;
+    min-height: 465px;
     padding: 20px;
 }
 

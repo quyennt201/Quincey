@@ -2,22 +2,23 @@ import React from "react";
 import "./Input.css";
 
 function Input(props) {
+  const {label, disabled, require, type, style, value, onChange} = props
   return (
     <div className="input">
       <label
         className="p-label"
-        style={props.disabled ? { color: "#dddddd" } : { color: "black" }}
+        style={{ color: "black" }}
       >
-        {props.label} {props.require && (<i class="require">* </i>)}
+        {label} {require && (<i class="require">* </i>)}
       </label>
       <br />
       <input
-        type={props.type}
+        type={type}
         className="p-input"
-        style={props.style}
-        disabled={props.disabled}
-        value={props.value}
-        onChange={props.onChange}
+        style={style}
+        disabled={disabled}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );

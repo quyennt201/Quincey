@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -25,7 +25,7 @@ function Header(props) {
 
   const handleClickLogout = () => {
     setLoading(true)
-    setUserLogin({status: false, data: ""})
+    setUserLogin()
     setIsClick(false)
     settingToastMess("success", "Logged!")
     localStorage.removeItem("user")
@@ -34,6 +34,10 @@ function Header(props) {
       setLoading(false)
     }, 500);
   }
+
+  // useEffect(() => {
+  //   console.log(userLogin)
+  // }, [userLogin]);
 
   return (
     <div className="header">
@@ -77,12 +81,12 @@ function Header(props) {
               setIsClick(!isClick);
             }}
           >
-            {userLogin?.status ? <img style={{height: "30px", width: "30px"}} src={userLogin?.data?.avatar} /> : <i class="far fa-user" style={{height: "30px", width: "30px"}}></i>}
+            {userLogin ? <img style={{height: "30px", width: "30px", borderRadius: "50%"}} src={userLogin?.avatar} /> : <i class="far fa-user" style={{height: "30px", width: "30px"}}></i>}
           </button>
           {isClick &&
-            (userLogin?.status ? (
+            (userLogin ? (
               <div className="header-user">
-                <p className="header-user-item-top">{userLogin?.data?.fullname}</p>
+                <p className="header-user-item-top">{userLogin?.fullname}</p>
                 <Link
                   to="/account/profile"
                   onClick={() => {

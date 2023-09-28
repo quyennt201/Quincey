@@ -7,11 +7,17 @@ const userSchema = new mongoose.Schema(
     fullname: String,
     address: [
       {
-        apartmentnumber: String,
+        name: String,
+        phonenumber: String,
+        specificaddress: String,
         ward: String,
         district: String,
         city: String,
-      },
+        main: {
+          type: Boolean,
+          default: false
+        }
+      }, 
     ],
     phonenumber: String,
     avatar: {

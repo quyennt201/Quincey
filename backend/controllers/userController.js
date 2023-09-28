@@ -25,7 +25,7 @@ const userController = {
         email: email,
         password: hashedPassword,
         fullname: fullname || "",
-        phonenumber: phonenumber || ""
+        phonenumber: phonenumber || "",
       });
       // save to db
       const user = await newUser.save();
@@ -63,6 +63,38 @@ const userController = {
         .json({ message: "Get all user successfully!", data: users });
     } catch (e) {
       res.status(500).json(exception(e));
+    }
+  },
+
+  getUser: async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id).populate("orders");
+      res.status(200).json({ message: "Get user successfully", data: user });
+    } catch (e) {
+      res.status(500).json(exception(e));
+    }
+  },
+
+  updateUser: async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, req.body);
+      res.status(200).json({ message: "Update user successfully", data: user });
+    } catch (e) {
+      res.status(500).json(exception(e));
+    }
+  },
+
+  updatePassword: async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(password, salt);
+
+      const user = await User.findOne({ email: email });
+      await user.updateOne({ password: hashed });
+      res.status(200).json("Update password successful!");
+    } catch (e) {
+      console.log(e);
     }
   },
 };

@@ -64,14 +64,12 @@ function LoginPage(props) {
       settingToastMess("warning", error);
     } else {
       setLoading(true);
-      console.log(user);
       const res = await userService.login(user);
-      console.log(res);
       if (res?.message) {
         settingToastMess("success", res?.message);
-        setUserLogin({ status: true, data: res?.data });
+        setUserLogin(res?.data);
         setUser({});
-        console.log(res?.data)
+        // console.log(res?.data)
         localStorage.setItem("user", JSON.stringify(res?.data))
         if(res?.data?.admin) {
           naviagte("/product")

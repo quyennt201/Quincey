@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/UserState";
 import { Link } from "react-router-dom";
@@ -7,11 +7,22 @@ import iconOrder from "../../assets/icons/order.png";
 import iconUser from "../../assets/icons/user.png";
 import "./Account.css";
 
-function Account(props) {
+function Account() {
+  const location = useLocation().pathname.split("/");
   const [isAccount, setIsAccount] = useState(false);
-  const [selected, setSelected] = useState(props.selected);
-  const userLogin = useRecoilValue(userState);
-  const user = userLogin?.data;
+  const [selected, setSelected] = useState(location[location.length - 1]);
+  const user = useRecoilValue(userState);
+
+  useEffect(() => {
+    setSelected(location[location.length - 1]);
+    if(location[location.length - 1] == "orders") {
+      setIsAccount(false)
+    }
+    else {
+      setIsAccount(true)
+    }
+  }, [location]);
+
   return (
     <div className="account">
       <div className="account-menu">
@@ -24,7 +35,7 @@ function Account(props) {
             to="/account/profile"
             className="btn-account"
             onClick={() => {
-              setIsAccount(true);
+              // setIsAccount(true);
               setSelected("profile");
             }}
           >
@@ -93,13 +104,13 @@ function Account(props) {
           <Link
             to="/account/orders"
             className={
-              selected == "my-order"
+              selected == "orders"
                 ? "btn-account btn-account-focus"
                 : "btn-account"
             }
             onClick={() => {
-                setIsAccount(false)
-                setSelected("my-order")
+              // setIsAccount(false);
+              setSelected("my-order");
             }}
           >
             <img

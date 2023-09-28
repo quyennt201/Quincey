@@ -79,11 +79,11 @@ function CardItem(props) {
           <div className="c-sale-price">
             <p className="c-sale-price-cost">${getPriceSale().toFixed(2)}</p>
             <del>
-              <p className="c-sale-price-sale">{data?.price.toFixed(2)}</p>
+              <p className="c-sale-price-sale">{data?.price?.toFixed(2)}</p>
             </del>
           </div>
         ) : (
-          <p className="c-item-cost">${data?.price.toFixed(2)}</p>
+          <p className="c-item-cost">${data?.price?.toFixed(2)}</p>
         )}
         {/* <p className="c-item-cost">${data?.price}</p> */}
         <div className="c-item-review">

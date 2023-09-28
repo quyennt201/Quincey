@@ -11,7 +11,7 @@ import PopupCart from "../../components/PopupCart/PopupCart";
 
 function Layout() {
   const location = useLocation().pathname.split("/")
-  console.log(location[location.length - 1])
+  // console.log(location[location.length - 1])
   const [selected, setSelected] = useState(location[location.length - 1])
   useEffect(() => {
     setSelected(location[location.length - 1])
