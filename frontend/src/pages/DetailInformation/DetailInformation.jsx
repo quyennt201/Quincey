@@ -4,10 +4,12 @@ import "./DetailInformation.css";
 import "../HomePage/HomePage.css";
 import productService from "../../services/ProductService";
 import SlideShow from "../../components/SlideShow/SlideShow";
-import { loadingState } from "../../recoil/LoadingState";
-import { useSetRecoilState, useRecoilState } from "recoil";
 import ViewMore from "../../components/ViewMore/ViewMore";
+import { useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
+import { loadingState } from "../../recoil/LoadingState";
 import { addToCart, cartState } from "../../recoil/CartState";
+import { alertState } from "../../recoil/AlertState";
+import { userState } from "../../recoil/UserState";
 import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 
 function DetailInformation() {
@@ -18,6 +20,8 @@ function DetailInformation() {
   const setType = useSetRecoilState(toastType);
   const setTxt = useSetRecoilState(toastTxt);
   const setState = useSetRecoilState(toastState);
+  const setIsAlert = useSetRecoilState(alertState);
+  const user = useRecoilValue(userState);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
@@ -25,7 +29,7 @@ function DetailInformation() {
     product: data,
     quantity: quantity,
     color: "",
-    size: ""
+    size: "",
   });
 
   const settingToastMess = (type, txt) => {
@@ -59,12 +63,16 @@ function DetailInformation() {
   };
 
   const handleAddToCart = () => {
-    const newCart = addToCart(cart, cartItem);
-    setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    settingToastMess("success", "success");
-    setSelectedColor("")
-    setSelectedSize("")
+    if (user) {
+      const newCart = addToCart(cart, cartItem);
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      settingToastMess("success", "success");
+      setSelectedColor("");
+      setSelectedSize("");
+    } else {
+      setIsAlert(true);
+    }
   };
 
   let lists = Object.keys(data);
@@ -90,8 +98,8 @@ function DetailInformation() {
     setData(res?.data);
     setCartItem({
       ...cartItem,
-      product: res?.data 
-    })
+      product: res?.data,
+    });
   };
 
   useEffect(() => {
@@ -226,12 +234,14 @@ function DetailInformation() {
             </div>
           </div>
           <button
-              className="i-btn"
-              onClick={handleAddToCart}
-              disabled={(!selectedColor || !selectedSize || !quantity) ? true : false}
-            >
-              Add to cart
-            </button>
+            className="i-btn"
+            onClick={handleAddToCart}
+            disabled={
+              !selectedColor || !selectedSize || !quantity ? true : false
+            }
+          >
+            Add to cart
+          </button>
         </div>
       </div>
       <div className="infor-detail c-infor">

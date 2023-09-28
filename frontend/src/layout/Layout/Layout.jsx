@@ -7,7 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import Popup from "../../components/Popup/Popup";
 import ToastMess from "../../components/ToastMess/ToastMess";
 import Loading from "../../components/Loading/Loading";
-import PopupCart from "../../components/PopupCart/PopupCart";
+import Alert from "../../components/Alert/Alert";
 
 function Layout() {
   const location = useLocation().pathname.split("/")
@@ -18,6 +18,7 @@ function Layout() {
   }, [location]);
   return (
     <div>
+      <Alert />
       <ToastMess />
       <Popup />
       <Loading />

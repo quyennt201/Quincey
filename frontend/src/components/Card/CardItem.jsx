@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CardStyle.css";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { userState } from "../../recoil/UserState";
 import { popupState } from "../../recoil/PopupState";
+import { alertState } from "../../recoil/AlertState";
 import PopupCart from "../PopupCart/PopupCart";
 
 function CardItem(props) {
   const { data, style, name, setIsUpdate, setDataUpdate, setDisplayForm } =
     props;
   const [isCartPopup, setIsCartPopup] = useState(false);
-  const [cartPopupData, setCartPopupData] = useState({})
+  const [cartPopupData, setCartPopupData] = useState({});
+  const setIsAlert = useSetRecoilState(alertState)
   const setPopup = useSetRecoilState(popupState);
+  const user = useRecoilValue(userState);
+  const navigate = useNavigate()
 
   const handleDelete = () => {
     setPopup({
@@ -26,11 +31,12 @@ function CardItem(props) {
   };
 
   const handleAddToCard = () => {
-    setIsCartPopup(true);
-    setCartPopupData(data);
-    // const newCart = addToCart(cart, data);
-    // setCart(newCart);
-    // localStorage.setItem("cart", JSON.stringify(newCart))
+    if (user) {
+      setIsCartPopup(true);
+      setCartPopupData(data);
+    } else {
+      setIsAlert(true)
+    }
   };
 
   const getPriceSale = () => {
@@ -40,7 +46,13 @@ function CardItem(props) {
 
   return (
     <div className="c-item" style={style} id={data?._id}>
-      {isCartPopup && <PopupCart isCartPopup={isCartPopup} setIsCartPopup={setIsCartPopup} data={cartPopupData} />}
+      {isCartPopup && (
+        <PopupCart
+          isCartPopup={isCartPopup}
+          setIsCartPopup={setIsCartPopup}
+          data={cartPopupData}
+        />
+      )}
       {data?.sale && data?.percent > 0 && (
         <div className="c-sale-percent">
           <i class="fas fa-bolt"></i>
@@ -49,9 +61,7 @@ function CardItem(props) {
       )}
       <div className="c-item-img">
         {name ? (
-          <button onClick={handleAddToCard}>
-            Add to cart
-          </button>
+          <button onClick={handleAddToCard}>Add to cart</button>
         ) : (
           <div className="c-item-img-btn">
             <button className="c-item-btn-edit" onClick={handleUpdate}>
