@@ -23,7 +23,7 @@ function Navbar(props) {
   };
 
   const getCartTotal = () => {
-    return cart.reduce((sum, { quantity }) => sum + quantity, 0);
+    return cart?.reduce((sum, { quantity }) => sum + quantity, 0);
   };
 
   return (

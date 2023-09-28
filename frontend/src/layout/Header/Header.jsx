@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
+import userService from "../../services/UserService";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { cartState } from "../../recoil/CartState";
 import { userState } from "../../recoil/UserState";
 import { loadingState } from "../../recoil/LoadingState";
 import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 
 function Header(props) {
   const { selected, setSelected } = props;
+  const [cart, setCart] = useRecoilState(cartState)
   const [isClick, setIsClick] = useState(false);
   const [userLogin, setUserLogin] = useRecoilState(userState);
   const setLoading = useSetRecoilState(loadingState)
@@ -23,16 +26,17 @@ function Header(props) {
     setType(type);
   };
 
-  const handleClickLogout = () => {
+  const handleClickLogout = async () => {
     setLoading(true)
-    setUserLogin()
     setIsClick(false)
-    settingToastMess("success", "Logged!")
+    await userService.updateUser(userLogin?._id, {...userLogin, ['carts']: cart})
+    setUserLogin()
+    setCart()
     localStorage.removeItem("user")
+    localStorage.removeItem("cart")
     navigate("/")
-    setTimeout(() => {
-      setLoading(false)
-    }, 500);
+    settingToastMess("success", "Logged!")
+    setLoading(false)
   }
 
   // useEffect(() => {

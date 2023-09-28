@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    carts: [],
     orders: [
       {
         type: String,

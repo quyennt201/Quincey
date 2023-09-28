@@ -21,7 +21,7 @@ export const cartTotal = selector({
   key: "cartTotal",
   get: ({ get }) => {
     const cart = get(cartState);
-    return cart.reduce((total, item) => {
+    return cart?.reduce((total, item) => {
       return total + item.product.price * item.quantity;
     }, 0);
   },

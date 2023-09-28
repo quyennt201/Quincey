@@ -7,6 +7,7 @@ import userService from "../../services/UserService";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
 import { userState } from "../../recoil/UserState";
+import { cartState } from "../../recoil/CartState";
 import { loadingState } from "../../recoil/LoadingState";
 import { validateRegister, validateLogin } from "../../utils/validateForm";
 
@@ -18,6 +19,7 @@ function LoginPage(props) {
   const setTxt = useSetRecoilState(toastTxt);
   const setState = useSetRecoilState(toastState);
   const setLoading = useSetRecoilState(loadingState);
+  const setCart = useSetRecoilState(cartState)
 
   const naviagte = useNavigate();
 
@@ -68,9 +70,11 @@ function LoginPage(props) {
       if (res?.message) {
         settingToastMess("success", res?.message);
         setUserLogin(res?.data);
+        setCart(res?.data?.carts)
         setUser({});
         // console.log(res?.data)
         localStorage.setItem("user", JSON.stringify(res?.data))
+        localStorage.setItem("cart", JSON.stringify(res?.data?.carts))
         if(res?.data?.admin) {
           naviagte("/product")
         }

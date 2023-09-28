@@ -12,12 +12,12 @@ function ShoppingCart() {
   const [selected, setSelected] = useState(false);
 
   const getCartTotal = () => {
-    return cart.reduce((sum, { quantity }) => sum + quantity, 0);
+    return cart?.reduce((sum, { quantity }) => sum + quantity, 0);
   };
 
   const getTotalPrice = () => {
     return cart
-      .reduce((total, item) => {
+      ?.reduce((total, item) => {
         return total + item.product.price * item.quantity;
       }, 0)
       .toFixed(2);
