@@ -30,7 +30,8 @@ const productController = {
 
   getByType: async (req, res) => {
     try {
-      const products = await Product.find({ type: req.query.type });
+      const { type } = req.query;
+      const products = await Product.find({ type: type });
       res.status(200).json({ message: "Get data success!", data: products });
     } catch (e) {
       res.status(500).json(exception(e));
@@ -75,6 +76,15 @@ const productController = {
       res
         .status(200)
         .json({ message: "Delete product successfully", data: "" });
+    } catch (e) {
+      res.status(500).json(exception(e));
+    }
+  },
+
+  search: async (req, res) => {
+    try {
+      const res = await Product.find({ category: req.body.category });
+      res.status(200).json({ message: "Search success", data: res });
     } catch (e) {
       res.status(500).json(exception(e));
     }

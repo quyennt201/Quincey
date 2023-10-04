@@ -14,14 +14,19 @@ function ProductPage() {
   const name = useParams().name || "";
 
   const [data, setData] = useState([]);
+  const [product, setProduct] = useState([]);
   const [displayForm, setDisplayForm] = useState(false); // display the information filling form
   const [dataUpdate, setDataUpdate] = useState({});
   const [isUpdate, setIsUpdate] = useState(false); // false - form update && true - form add new
+  const [isClear, setIsClear] = useState(false)
+  const [type, setType] = useState();
+  const [category, setCategory] = useState();
+  const [trademark, setTrademark] = useState();
   const [valueSliderMin, setValueSliderMin] = useState(0); // value min of price in search
   const [valueSliderMax, setValueSliderMax] = useState(100); // value max of price in search
 
   const setLoading = useSetRecoilState(loadingState);
-  const isReload = useRecoilValue(popupReload)
+  const isReload = useRecoilValue(popupReload);
 
   const onChange = (value) => {
     setValueSliderMin(value[0]);
@@ -36,8 +41,53 @@ function ProductPage() {
     } else {
       res = await productService.getProducts();
     }
+    setProduct(res?.data);
     setData(res?.data);
   };
+
+  const handleSearchType = (data) => {
+    if (type) {
+      return data.filter((dt) => dt.type == type);
+    } else return data;
+  };
+
+  const handleSearchCategory = (data) => {
+    if (category) {
+      return data.filter((dt) => dt.category == category);
+    } else return data;
+  };
+
+  const handleSearchTrademark = (data) => {
+    if (trademark) {
+      return data.filter((dt) => dt.trademark == trademark);
+    } else return data;
+  };
+
+  const handleSearchPrice = (data) => {
+    return data.filter(dt => (dt.price >= valueSliderMin && dt.price <= valueSliderMax))
+  };
+
+  const handleSearch = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 500);
+    const res1 = handleSearchType(product)
+    const res2 = handleSearchTrademark(res1);
+    const res3 = handleSearchCategory(res2)
+    const res4 = handleSearchPrice(res3)
+    setData(res4);
+  };
+
+  const handleClear = () => {
+    setIsClear(!isClear)
+    setType("")
+    setCategory("")
+    setTrademark("")
+    setValueSliderMax(100)
+    setValueSliderMin(0)
+    setData(product)
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,7 +96,7 @@ function ProductPage() {
     getData();
     // setDisplayForm(false)
     window.scrollTo(0, 0);
-  }, [name, displayForm, isReload]);
+  }, [name, displayForm, isReload, isClear]);
 
   return (
     <div className="product">
@@ -55,9 +105,9 @@ function ProductPage() {
           <button
             className={displayForm ? "product-list-btn" : "product-add-btn"}
             onClick={() => {
-              setDisplayForm(!displayForm)
-              setIsUpdate(false)
-              setDataUpdate({})
+              setDisplayForm(!displayForm);
+              setIsUpdate(false);
+              setDataUpdate({});
             }}
           >
             {displayForm ? "Product List" : "Add New Product"}
@@ -71,13 +121,17 @@ function ProductPage() {
               <p className="p-title">Type</p>
               {TYPE?.map((tr) => (
                 <>
-                  <input
-                    type="radio"
-                    className="p-category"
-                    name="type"
-                    value={tr.value}
-                  />
-                  <label for="type">{tr.label}</label>
+                  <label for="type">
+                    <input
+                      type="radio"
+                      className="p-category"
+                      name="type"
+                      value={tr.value}
+                      checked={type ? true : false}
+                      onChange={(e) => setType(e.target.value)}
+                    />
+                    {tr.label}
+                  </label>
                   <br />
                 </>
               ))}
@@ -91,13 +145,17 @@ function ProductPage() {
             <p className="p-title">Category</p>
             {CATEGORY?.map((tr) => (
               <>
-                <input
-                  type="radio"
-                  className="p-category"
-                  name="category"
-                  value={tr.value}
-                />
-                <label for="category">{tr.label}</label>
+                <label for="category">
+                  <input
+                    type="radio"
+                    className="p-category"
+                    name="category"
+                    value={tr.value}
+                    checked={category ? true : false}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                  {tr.label}
+                </label>
                 <br />
               </>
             ))}
@@ -108,13 +166,17 @@ function ProductPage() {
             <p className="p-title">Trademark</p>
             {TRADEMARK.map((tr) => (
               <div>
-                <input
-                  type="radio"
-                  className="p-category"
-                  name="trademark"
-                  value={tr.value}
-                />
-                <label for="trademark">{tr.label}</label>
+                <label for="trademark">
+                  <input
+                    type="radio"
+                    className="p-category"
+                    name="trademark"
+                    value={tr.value}
+                    checked={trademark ? true : false}
+                    onChange={(e) => setTrademark(e.target.value)}
+                  />
+                  {tr.label}
+                </label>
               </div>
             ))}
           </form>
@@ -125,6 +187,7 @@ function ProductPage() {
             range
             defaultValue={[0, 100]}
             onChange={onChange}
+            value={[valueSliderMin, valueSliderMax]}
             style={{ marginLeft: "10px", marginRight: "10px" }}
             // onAfterChange={onAfterChange}
           />
@@ -134,14 +197,16 @@ function ProductPage() {
           </div>
         </div>
         <div className="product-search-btn">
-          <button className="p-search-btn">Search</button>
-          <button className="p-clear-btn">Clear All</button>
+          <button className="p-search-btn" onClick={handleSearch}>
+            Search
+          </button>
+          <button className="p-clear-btn" onClick={handleClear}>Clear All</button>
         </div>
       </div>
       <div className="product-manage">
         {displayForm && !name ? (
           <ProductAddForm
-            isUpdate={isUpdate}// true-form update || false-form add new
+            isUpdate={isUpdate} // true-form update || false-form add new
             dataUpdate={dataUpdate}
             setDisplayForm={setDisplayForm}
           />
