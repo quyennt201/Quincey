@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema(
         ward: String,
         district: String,
         city: String,
-        main: {
-          type: Boolean,
-          default: false
-        }
+        // main: {
+        //   type: Boolean,
+        //   default: false
+        // }
       }, 
     ],
     phonenumber: String,

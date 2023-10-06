@@ -57,6 +57,7 @@ function ProductAddForm(props) {
     } else {
       settingToastMess("error", res?.data?.error);
     }
+    console.log(product);
     setDisplayForm(false);
     setLoading(false);
   };
@@ -69,6 +70,7 @@ function ProductAddForm(props) {
     } else {
       settingToastMess("error", res?.data?.error);
     }
+    console.log(product);
     setDisplayForm(false);
     setLoading(false);
   };
@@ -89,7 +91,7 @@ function ProductAddForm(props) {
           setUrlImg([...urlImg, response.data.url]);
           handleChange("img", [...urlImg, response.data.url]);
           setLoading(false);
-          setImage("")
+          setImage("");
         })
         .catch((err) => {
           settingToastMess("error", "Please select image!");
@@ -99,8 +101,8 @@ function ProductAddForm(props) {
     } else {
       setUrlImg([...urlImg, image]);
       handleChange("img", [...urlImg, image]);
-      setImage("")
-      setLoading(false)
+      setImage("");
+      setLoading(false);
     }
   };
 
@@ -115,9 +117,12 @@ function ProductAddForm(props) {
         />
         <Input
           type="number"
-          label="price"
+          label="Cost"
           value={product?.price}
-          onChange={(e) => handleChange("price", Number(e.target.value))}
+          onChange={(e) => {
+            handleChange("price", Number(e.target.value));
+            // handleChange("cost", Number(e.target.value));
+          }}
         />
         <Input
           type="text"
@@ -143,8 +148,10 @@ function ProductAddForm(props) {
             label="percent"
             style={{ width: "325px" }}
             disabled={!isSale}
-            value={isSale ? product?.percent : 0}
-            onChange={(e) => handleChange("percent", Number(e.target.value))}
+            value={isSale ? product?.percent : ""}
+            onChange={(e) => {
+              handleChange("percent", Number(e.target.value));
+            }}
           />
           <div style={{ display: "block", height: "60px", margin: "15px" }}>
             <label className="p-label">Sale</label>
@@ -155,7 +162,7 @@ function ProductAddForm(props) {
                 setIsSale(e.target.checked);
                 handleChange("sale", e.target.checked);
               }}
-              checked={isSale}
+              checked={product?.sale || false}
               style={{ marginTop: "10px", marginLeft: "7px" }}
             />
           </div>
@@ -185,9 +192,17 @@ function ProductAddForm(props) {
         </div>
         <div className="product-add-img">
           {isChooseFile ? (
-            <input type="file" accept="image" onChange={(e) => setImage(e.target.files[0])} />
+            <input
+              type="file"
+              accept="image"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
           ) : (
-            <input className="product-input-img" value={image} onChange={(e) => setImage(e.target.value)} />
+            <input
+              className="product-input-img"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
           )}
           <button id="addImg" onClick={uploadImage}>
             Add Image

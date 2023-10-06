@@ -1,49 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./ShoppingCart.css";
-import CartShoppingItem from "../../components/CartShoppingItem/CartShoppingItem";
-import { cartState } from "../../recoil/CartState";
+import { cartTotalQuantity, cartTotalPrice } from "../../recoil/CartState";
 import { useRecoilValue } from "recoil";
 import imgPayment from "../../assets/img/method-payment.png";
 import ViewMore from "../../components/ViewMore/ViewMore";
-import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
+import ShoppingCartElement from "../../components/ShoppingCartElement/ShoppingCartElement";
 
 function ShoppingCart() {
-  const cart = useRecoilValue(cartState);
-  const [selected, setSelected] = useState(false);
-
-  const getCartTotal = () => {
-    return cart?.reduce((sum, { quantity }) => sum + quantity, 0);
-  };
-
-  const getTotalPrice = () => {
-    return cart
-      ?.reduce((total, item) => {
-        return total + item.product.price * item.quantity;
-      }, 0)
-      .toFixed(2);
-  };
-
-  useEffect(() => {
-    getCartTotal();
-    getTotalPrice();
-  }, [cart]);
+  const getTotalPrice = useRecoilValue(cartTotalPrice);
+  const getTotalQuantity = useRecoilValue(cartTotalQuantity);
 
   return (
     <div style={{ width: "100%" }}>
       <div className="cart">
         <div style={{ width: "65%", marginRight: "30px" }}>
-          <Outlet />
+          <ShoppingCartElement />
         </div>
         <div className="cart-checkout">
           <div className="cart-checkout-total">
             <p className="cart-total-title">Order Summary</p>
             <div className="cart-total-price">
               <p style={{ fontWeight: "500" }}>Subtotal</p>
-              <p className="cart-total-number">${getTotalPrice()}</p>
+              <p className="cart-total-number">${getTotalPrice}</p>
             </div>
-            <button className="cart-total-btn">
-              Checkout Now ({getCartTotal()})
-            </button>
+            <Link to="/checkout">
+              <button className="cart-total-btn">
+                Checkout Now ({getTotalQuantity})
+              </button>
+            </Link>
           </div>
           <div className="cart-checkout-method">
             <p className="cart-total-title">We Accept</p>

@@ -32,7 +32,6 @@ function MyAddress() {
         {user?.address.map((add) => (
           <AddressItem
             address={add}
-            setIsPopup={setIsPopup}
             isDelete={isDelete}
             setIsDelete={setIsDelete}
             user={user}

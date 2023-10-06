@@ -45,6 +45,7 @@
     border: none;
     font-weight: 700;
     cursor: pointer;
+    width: 100%;
 }
 
 .cart-total-btn:hover {

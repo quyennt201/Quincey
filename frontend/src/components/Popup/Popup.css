@@ -1,6 +1,6 @@
 .pop-up {
     position: fixed;
-    top: 50px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -16,7 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     height: max-content;
-    width: max-content;
+    min-width: 500px;
     background-color: white;
     border-radius: 4px;
     z-index: 101;
@@ -102,4 +102,9 @@
 
 .btn-delete:hover {
     background-color: red;
+}
+
+.popup-content-column {
+    display: flex;
+    flex-direction: column;
 }

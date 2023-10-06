@@ -14,6 +14,8 @@ import MyOrders from './components/MyOrders/MyOrders'
 import MyBank from "./components/MyBank/MyBank";
 import MyAddress from "./components/MyAddress/MyAddress";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import Pending from "./pages/Pending/Pending";
 
 function App() {
   if(!localStorage.getItem('cart')) {
@@ -28,10 +30,9 @@ function App() {
         <Route path="/product" element={<ProductPage />} />
         <Route path="/product/:name" element={<ProductPage />} />
         <Route path="/product/detail/:id" element={<DetailInformation />} />
-        <Route path="/shopping-cart" element={<ShoppingCart />}>
-          <Route path="/shopping-cart" element={<ShoppingCartElement />} />
-          <Route path="/shopping-cart/checkout" element={<ShoppingCart />} />
-        </Route>
+        <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route path="/checkout" element={<PaymentPage />} />
+        <Route path="/pending" element={<Pending />} />
         <Route path="/account" element={<Account />}>
           <Route path="/account/profile" element={<MyProfile />} />
           <Route path="/account/orders" element={<MyOrders />} />

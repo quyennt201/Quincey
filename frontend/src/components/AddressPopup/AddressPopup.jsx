@@ -89,7 +89,7 @@ function AddressPopup(props) {
               onChange={(e) => handleChangeCity(e.target.value)}
             >
               <option value="" selected>
-                Chọn tỉnh thành
+              Select province
               </option>
               {listCity?.map((city) => (
                 <option value={city.Name}>{city.Name}</option>
@@ -103,7 +103,7 @@ function AddressPopup(props) {
               onChange={(e) => handleChangeDistrict(e.target.value)}
             >
               <option value="" selected>
-                Chọn quận huyện
+                Select district
               </option>
               {listDistrict?.map((district) => (
                 <option value={district.Name}>{district.Name}</option>
@@ -117,7 +117,7 @@ function AddressPopup(props) {
               onChange={(e) => handleChange("ward", e.target.value)}
             >
               <option value="" selected>
-                Chọn phường xã
+                Select ward
               </option>
               {listWard?.map((ward) => (
                 <option value={ward.Name}>{ward.Name}</option>

@@ -21,6 +21,7 @@
     /* width: calc(100% - 160px); */
     /* width: calc(100% - 80px); */
     width: 740px;
+    
 }
 
 .cart-item-des {
@@ -42,6 +43,15 @@
     cursor: pointer;
 }
 
+.cart-item-size {
+    font-size: 13px;
+    border-radius: 20px;
+    padding: 3px 7px;
+    width: max-content;
+    background-color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+}
+
 .cart-item-color:hover {
     border: 1px solid black;
 }
@@ -54,6 +64,8 @@
 .cart-item-price {
     font-weight: 700;
     font-size: 17px;
+    display: flex;
+    /* margin-right: 20px; */
 }
 
 .cart-item-option {

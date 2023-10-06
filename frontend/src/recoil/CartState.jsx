@@ -17,13 +17,46 @@ export const cartPopupData = atom({
   default: {},
 });
 
-export const cartTotal = selector({
-  key: "cartTotal",
+export const cartTotalQuantity = selector({
+  key: "cartTotalQuantity",
   get: ({ get }) => {
     const cart = get(cartState);
-    return cart?.reduce((total, item) => {
-      return total + item.product.price * item.quantity;
-    }, 0);
+    return cart?.reduce((sum, { quantity }) => sum + quantity, 0);
+  },
+});
+
+export const cartTotalPrice = selector({
+  key: "cartTotalPrice",
+  get: ({ get }) => {
+    const cart = get(cartState);
+    return cart
+      ?.reduce((total, item) => {
+        if (item?.product?.sale) {
+          return (
+            total +
+            (
+              item.product.price -
+              (item.product.price * item.product.percent) / 100
+            ).toFixed(2) *
+              item.quantity
+          );
+        } else {
+          return total + item.product.price * item.quantity;
+        }
+      }, 0)
+      .toFixed(2);
+  },
+});
+
+export const cartTotalCost = selector({
+  key: "cartTotalCost",
+  get: ({ get }) => {
+    const cart = get(cartState);
+    return cart
+      ?.reduce((total, item) => {
+        return total + item.product.price * item.quantity;
+      }, 0)
+      .toFixed(2);
   },
 });
 
@@ -62,9 +95,9 @@ export const updateCart = (cart, idx, data) => {
 
 export const deleteCart = (cart, idex) => {
   // const newCart = [...cart];
-  
+
   const newCart = cart.filter((cart, idx) => idx != idex);
-  console.log(newCart)
+  console.log(newCart);
   return newCart;
 };
 

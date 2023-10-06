@@ -26,5 +26,5 @@ input[type="checkbox"] {
     flex-direction: column;
     background-color: white;
     max-height: 472px;
-    overflow: auto;
+    overflow-y: auto;
 }

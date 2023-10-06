@@ -7,6 +7,7 @@ import { cartState } from "../../recoil/CartState";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../../recoil/UserState";
 import { toastState, toastTxt, toastType } from "../../recoil/ToastMessState";
+import orderService from "../../services/OrderService";
 
 function Navbar(props) {
   const { selected, setSelected } = props;
@@ -15,6 +16,7 @@ function Navbar(props) {
   const setType = useSetRecoilState(toastType);
   const setTxt = useSetRecoilState(toastTxt);
   const setState = useSetRecoilState(toastState);
+  const [order, setOrder] = useState([]);
 
   const settingToastMess = (type, txt) => {
     setState(true);
@@ -25,6 +27,23 @@ function Navbar(props) {
   const getCartTotal = () => {
     return cart?.reduce((sum, { quantity }) => sum + quantity, 0);
   };
+
+  const getPendingTotal = () => {
+    return order?.reduce((sum, { status }) => {
+      if (status == "00") {
+        return sum + 1;
+      } else return sum;
+    }, 0);
+  };
+
+  const getOrders = async () => {
+    const res = await orderService.getOrders();
+    setOrder(res.data);
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <div className="navbar">
@@ -84,7 +103,7 @@ function Navbar(props) {
           </button>
         </div> */}
         {userLogin?.admin ? (
-          <Link>
+          <Link to="/pending">
             <button
               className="btn-icon"
               style={{
@@ -94,7 +113,7 @@ function Navbar(props) {
               }}
             >
               <i class="fas fa-shopping-bag"></i>
-              <p className="length-cart">{getCartTotal()}</p>
+              <p className="length-cart">{getPendingTotal()}</p>
             </button>
           </Link>
         ) : (

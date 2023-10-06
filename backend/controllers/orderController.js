@@ -1,4 +1,5 @@
 const Order = require("../models/orderModel");
+const User = require("../models/userModel");
 
 const exception = (e) => {
   return {
@@ -10,7 +11,9 @@ const exception = (e) => {
 const orderController = {
   get: async (req, res) => {
     try {
-      const orders = await Order.find().populate({path: "items", populate: {path: "product"}}).populate("customer");
+      const orders = await Order.find()
+        .populate({ path: "items", populate: { path: "product" } })
+        .populate("customer");
       res
         .status(200)
         .json({ message: "Gel all orders successfully!", data: orders });
@@ -21,7 +24,9 @@ const orderController = {
 
   getById: async (req, res) => {
     try {
-      const order = await Order.findById(req.params.id).populate({path: "items", populate: {path: "product"}}).populate("customer");
+      const order = await Order.findById(req.params.id)
+        .populate({ path: "items", populate: { path: "product" } })
+        .populate("customer");
       res.status(200).json({ message: "Get order successfully", data: order });
     } catch (e) {
       res.status(500).json(exception(e));
@@ -32,6 +37,8 @@ const orderController = {
     try {
       const newOrder = new Order(req.body);
       const order = await newOrder.save();
+      const user = await User.findById(req.body.customer);
+      await user.updateOne({ $push: { orders: order._id } });
       res
         .status(201)
         .json({ message: "Create order successfully!", data: order });
