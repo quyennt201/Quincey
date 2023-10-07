@@ -71,13 +71,13 @@ function ChangePassword() {
             Verify with OTP code sent via email
           </div>
           <div className="send-email-body">
-            <p>Please enter the password to be sent to the email address</p>
+            <p style={{fontWeight: "500"}}>Please enter the password to be sent to the email address</p>
             <h5>{userLogin?.email}</h5>
             <div className="send-email-icon">
               <i class="fal fa-envelope"></i>
             </div>
             <div className="send-email-form">
-              <input className="send-email-input" onChange={(e) => setInputOtp(e.target.value)}/>
+              <input className="send-email-input" autoFocus onChange={(e) => setInputOtp(e.target.value)}/>
               <button className="send-email-btn-icon" onClick={handleSendOtp}>
                 <i class="fas fa-paper-plane"></i>
               </button>

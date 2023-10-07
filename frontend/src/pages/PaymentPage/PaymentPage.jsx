@@ -118,13 +118,13 @@ function PaymentPage() {
               ></i>
             </button>
           </div>
-          <div className="payment-border">
+          {address ? <div className="payment-border">
             <AddressItem
               address={address}
               hideIcon={true}
               style={{ border: "none" }}
             />
-          </div>
+          </div> : <p>[Add address]</p>}
         </div>
         <div className="payment-method">
           <h4 className="payment-title">Payment method</h4>

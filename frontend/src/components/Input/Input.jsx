@@ -2,7 +2,7 @@ import React from "react";
 import "./Input.css";
 
 function Input(props) {
-  const {label, disabled, require, type, style, value, onChange} = props
+  const {label, disabled, require, type, style, value, onChange, autofocus} = props
   return (
     <div className="input">
       <label
@@ -19,6 +19,7 @@ function Input(props) {
         disabled={disabled}
         value={value}
         onChange={onChange}
+        autoFocus={autofocus ? true : false}
       />
     </div>
   );

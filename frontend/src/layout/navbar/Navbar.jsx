@@ -49,16 +49,28 @@ function Navbar(props) {
     <div className="navbar">
       <div className="menu">
         {userLogin?.admin ? (
-          <Link to="/product">
-            <button
-              className={
-                selected == "product" ? "menu-btn menu-btn-focus" : "menu-btn"
-              }
-              onClick={() => setSelected("product")}
-            >
-              Product
-            </button>
-          </Link>
+          <>
+            <Link to="/product">
+              <button
+                className={
+                  selected == "product" ? "menu-btn menu-btn-focus" : "menu-btn"
+                }
+                // onClick={() => setSelected("product")}
+              >
+                Product
+              </button>
+            </Link>
+            <Link to="/history-order">
+              <button
+                className={
+                  selected == "history-order" ? "menu-btn menu-btn-focus" : "menu-btn"
+                }
+                // onClick={() => setSelected("history-order")}
+              >
+                History orders
+              </button>
+            </Link>
+          </>
         ) : (
           <>
             <Link to="/">

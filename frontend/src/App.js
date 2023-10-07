@@ -16,6 +16,7 @@ import MyAddress from "./components/MyAddress/MyAddress";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import Pending from "./pages/Pending/Pending";
+import HistoryOrder from "./pages/HistoryOrder/HistoryOrder";
 
 function App() {
   if(!localStorage.getItem('cart')) {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<PaymentPage />} />
         <Route path="/pending" element={<Pending />} />
+        <Route path="/history-order" element={<HistoryOrder />} />
         <Route path="/account" element={<Account />}>
           <Route path="/account/profile" element={<MyProfile />} />
           <Route path="/account/orders" element={<MyOrders />} />

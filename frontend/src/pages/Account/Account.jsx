@@ -60,7 +60,7 @@ function Account() {
               >
                 Profile
               </Link>
-              <Link
+              {/* <Link
                 to="/account/bank"
                 className={
                   selected == "bank"
@@ -72,7 +72,7 @@ function Account() {
                 }}
               >
                 Bank
-              </Link>
+              </Link> */}
               <Link
                 to="/account/address"
                 className={

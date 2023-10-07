@@ -6,7 +6,7 @@ import { loadingState } from "../../recoil/LoadingState";
 import { useSetRecoilState } from "recoil";
 
 function MyOrders(props) {
-  const { admin } = props;
+  const { admin, history } = props;
   const [isClickPopup, setIsClickPopup] = useState(false);
   const [orders, setOrders] = useState([]);
   const setLoading = useSetRecoilState(loadingState);
@@ -14,6 +14,7 @@ function MyOrders(props) {
   const getOrders = async () => {
     setLoading(true);
     const res = await orderService.getOrders();
+    console.log(res.data.reverse());
     setOrders(res.data);
     setLoading(false);
   };
@@ -32,7 +33,7 @@ function MyOrders(props) {
 
   return (
     <div className="order">
-      {(lengthPending() == 0 && admin) || orders?.length == 0 ? (
+      {(lengthPending() == 0 && admin && !history) || orders?.length == 0 ? (
         <p
           style={{
             fontSize: "200%",
@@ -44,23 +45,40 @@ function MyOrders(props) {
           It is empty
         </p>
       ) : admin ? (
-        <>
-          {orders.map((order) => {
-            if (order?.status == "00") {
-              return (
-                <OrderItem
-                  isClickPopup={isClickPopup}
-                  setIsClickPopup={setIsClickPopup}
-                  order={order}
-                  admin={admin}
-                />
-              );
-            }
-          })}
-        </>
+        history ? (
+          <>
+            {orders.reverse().map((order) => {
+              if (order?.status != "00") {
+                return (
+                  <OrderItem
+                    isClickPopup={isClickPopup}
+                    setIsClickPopup={setIsClickPopup}
+                    order={order}
+                    admin={admin}
+                  />
+                );
+              }
+            })}
+          </>
+        ) : (
+          <>
+            {orders.reverse().map((order) => {
+              if (order?.status == "00") {
+                return (
+                  <OrderItem
+                    isClickPopup={isClickPopup}
+                    setIsClickPopup={setIsClickPopup}
+                    order={order}
+                    admin={admin}
+                  />
+                );
+              }
+            })}
+          </>
+        )
       ) : (
         <>
-          {orders.map((order) => (
+          {orders.reverse().map((order) => (
             <OrderItem
               order={order}
               isClickPopup={isClickPopup}

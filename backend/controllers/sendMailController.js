@@ -10,10 +10,12 @@ const tokenOtp = speakeasy.totp({
 });
 
 const GOOGLE_MAILER_CLIENT_ID =
-  "585092343933-5g54v9jh6gs1eoum3r3fo10tmq6bcovc.apps.googleusercontent.com";
-const GOOGLE_MAILER_CLIENT_SECRET = "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";
+  "1050100437442-376jt1tr0ekajqdnsivf6f5l4nrhagfk.apps.googleusercontent.com";
+const GOOGLE_MAILER_CLIENT_SECRET = "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";
 const GOOGLE_MAILER_REFRESH_TOKEN =
-  "1//04qUhZW2KXC5BCgYIARAAGAQSNwF-L9IrhmAdrBFXFsQ0HZlKD4an_2dgiwGk168FFdekZO0O8w-Kkt3XNPyxwGE8ttXKq9LCRFg";
+  "1//04JsqmGuMlEbzCgYIARAAGAQSNwF-L9IrqdS_RsIAfluy_utms25bNRsoI3RocYnSsPnBS2NXXZzUMNPQ2s1agwR9p96MiPSUuEM";
+// const GOOGLE_MAILER_REFRESH_TOKEN =
+//   "1//04qUhZW2KXC5BCgYIARAAGAQSNwF-L9IrhmAdrBFXFsQ0HZlKD4an_2dgiwGk168FFdekZO0O8w-Kkt3XNPyxwGE8ttXKq9LCRFg";
 const ADMIN_EMAIL_ADDRESS = "quyenmeomeo111@gmail.com";
 
 // Khởi tạo OAuth2Client với Client ID và Client Secret
